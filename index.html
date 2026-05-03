@@ -1,2334 +1,835 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LENTSCAPE 9.0 — Echoes of Neosantara</title>
-<meta name="description" content="LENTSCAPE 9.0 - Echoes of Neosantara: Building Indonesia's Future through National Values and Collaboration. Event tahunan OSIS SMAIT Ummul Quro Bogor."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
-<style>
-/* ============================================================
-   VARIABLES & RESET
-============================================================ */
-:root{
-  --ink:#04010f;
-  --deep:#07052a;
-  --navy:#0c0a3e;
-  --royal:#1a1464;
-  --iris:#3730a3;
-  --violet:#5b21b6;
-  --grape:#7c3aed;
-  --lavender:#a78bfa;
-  --mist:#c4b5fd;
-  --sky:#3b82f6;
-  --azure:#60a5fa;
-  --ice:#bfdbfe;
-  --gold:#f59e0b;
-  --amber:#fbbf24;
-  --cream:#fef3c7;
-  --white:#f8f6ff;
-  --g1:linear-gradient(135deg,#5b21b6,#1a1464);
-  --g2:linear-gradient(135deg,#7c3aed,#3730a3);
-  --g3:linear-gradient(135deg,#1a1464,#3b82f6);
-  --g4:linear-gradient(90deg,#7c3aed,#3b82f6);
-  --gtext:linear-gradient(135deg,#a78bfa,#60a5fa);
-  --ggold:linear-gradient(135deg,#f59e0b,#fde68a);
-  --glass:rgba(255,255,255,0.04);
-  --glassbr:rgba(255,255,255,0.09);
-  --glassbrh:rgba(167,139,250,0.25);
-  --shadow:0 20px 60px rgba(0,0,0,0.5);
-  --shadowglow:0 0 40px rgba(124,58,237,0.3);
-  --tr:.45s cubic-bezier(.23,1,.32,1);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{
-  background:var(--ink);
-  color:var(--white);
-  font-family:'DM Sans',sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--ink)}
-::-webkit-scrollbar-thumb{background:var(--grape);border-radius:2px}
-img{max-width:100%;display:block}
-a{text-decoration:none;color:inherit;cursor:none}
-button{cursor:none;font-family:inherit;border:none;background:none}
-ul{list-style:none}
-
-/* ============================================================
-   CURSOR
-============================================================ */
-#cur{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--mist);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width.15s,height.15s,background.15s}
-#cur2{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(167,139,250,.4);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all.1s ease}
-body.cursor-lg #cur{width:18px;height:18px;background:var(--amber)}
-body.cursor-lg #cur2{width:52px;height:52px;border-color:rgba(251,191,36,.35)}
-
-/* ============================================================
-   CANVAS BG
-============================================================ */
-#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85}
-
-/* ============================================================
-   NOISE OVERLAY
-============================================================ */
-body::before{
-  content:'';
-  position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-  opacity:.35;
-}
-
-/* ============================================================
-   NAVBAR
-============================================================ */
-#nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 4rem;
-  transition:var(--tr);
-}
-#nav.scrolled{
-  background:rgba(4,1,15,.88);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--glassbr);
-  padding:.75rem 4rem;
-}
-.nav-logo{
-  display:flex;align-items:center;gap:.7rem;
-}
-.nav-logo-badge{
-  width:38px;height:38px;
-  background:var(--g2);
-  border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1rem;letter-spacing:1px;
-  box-shadow:var(--shadowglow);
-}
-.nav-logo-text{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.35rem;letter-spacing:3px;
-  background:var(--gtext);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.nav-links{display:flex;gap:2.2rem;align-items:center}
-.nav-links a{
-  font-size:.8rem;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;
-  color:rgba(248,246,255,.65);
-  position:relative;transition:color.3s;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:-5px;left:0;width:0;height:1.5px;
-  background:var(--g4);border-radius:1px;transition:width.35s;
-}
-.nav-links a:hover,
-.nav-links a.on{color:var(--mist)}
-.nav-links a:hover::after,
-.nav-links a.on::after{width:100%}
-.nav-cta{
-  padding:.5rem 1.4rem;
-  background:var(--g1);
-  border-radius:100px;
-  font-size:.78rem;font-weight:600;letter-spacing:1px;
-  box-shadow:0 0 20px rgba(91,33,182,.4);
-  transition:var(--tr);
-}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 35px rgba(91,33,182,.6)}
-.ham{display:none;flex-direction:column;gap:4px;padding:4px}
-.ham span{display:block;width:22px;height:1.5px;background:var(--mist);transition:var(--tr)}
-.mob-menu{
-  display:none;position:fixed;inset:0;z-index:490;
-  background:rgba(4,1,15,.97);backdrop-filter:blur(30px);
-  flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;
-}
-.mob-menu.on{display:flex}
-.mob-menu a{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;color:var(--white);transition:color.3s}
-.mob-menu a:hover{color:var(--lavender)}
-
-/* ============================================================
-   SECTIONS BASE
-============================================================ */
-section{position:relative;z-index:2}
-.container{max-width:1240px;margin:0 auto;padding:0 2rem}
-
-/* section labels */
-.eyebrow{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-  color:var(--lavender);margin-bottom:1rem;
-}
-.eyebrow::before,.eyebrow::after{content:'✦';font-size:.55rem;opacity:.6}
-.sec-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,4.5vw,4rem);
-  font-weight:900;line-height:1.1;
-  background:linear-gradient(160deg,#fff 30%,var(--mist));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:1.2rem;
-}
-.sec-lead{
-  font-family:'Lora',serif;font-style:italic;
-  font-size:1.1rem;color:rgba(196,181,253,.75);
-  line-height:1.8;max-width:580px;
-}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(36px);transition:opacity.8s,transform.8s}
-.rv.vi{opacity:1;transform:none}
-.rvl{opacity:0;transform:translateX(-36px);transition:opacity.8s,transform.8s}
-.rvl.vi{opacity:1;transform:none}
-.rvr{opacity:0;transform:translateX(36px);transition:opacity.8s,transform.8s}
-.rvr.vi{opacity:1;transform:none}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
-.d4{transition-delay:.4s}.d5{transition-delay:.5s}
-
-/* ============================================================
-   HERO
-============================================================ */
-#home{
-  min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:7rem 2rem 5rem;text-align:center;overflow:hidden;
-}
-.hero-kicker{
-  display:inline-flex;align-items:center;gap:.6rem;
-  background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);
-  border-radius:100px;padding:.35rem 1.1rem;
-  font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:var(--lavender);margin-bottom:2.2rem;
-  animation:fadeD .8s .1s both;
-}
-.hero-kicker i{width:6px;height:6px;border-radius:50%;background:var(--lavender);animation:blink 1.8s infinite}
-.hero-main-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(5rem,16vw,14rem);
-  letter-spacing:6px;line-height:.95;
-  background:linear-gradient(160deg,#ffffff 0%,#c4b5fd 45%,#60a5fa 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:fadeD .8s .2s both;
-  position:relative;z-index:2;
-}
-.hero-version-row{
-  display:flex;align-items:center;justify-content:center;gap:1.5rem;
-  margin:.4rem 0 2rem;animation:fadeD .8s .3s both;
-}
-.hero-ver-line{flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--grape))}
-.hero-ver-line.r{background:linear-gradient(90deg,var(--grape),transparent)}
-.hero-ver-num{
-  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:6px;
-  color:var(--amber);text-shadow:0 0 20px rgba(245,158,11,.5);
-}
-.hero-theme-text{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:clamp(.95rem,2vw,1.4rem);color:var(--mist);
-  max-width:680px;line-height:1.75;
-  animation:fadeD .8s .4s both;margin-bottom:.6rem;
-}
-.hero-org{
-  font-size:.75rem;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--lavender);opacity:.6;
-  animation:fadeD .8s .5s both;margin-bottom:2.8rem;
-}
-/* countdown */
-.hero-cd{
-  display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;
-  animation:fadeD .8s .55s both;margin-bottom:3rem;
-}
-.cd-box{
-  display:flex;flex-direction:column;align-items:center;gap:.3rem;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:16px;padding:1rem 1.4rem;
-  backdrop-filter:blur(12px);min-width:78px;
-}
-.cd-num{
-  font-family:'Bebas Neue',sans-serif;font-size:2.4rem;line-height:1;
-  background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.cd-label{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--lavender);opacity:.65}
-/* hero buttons */
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeD .8s .65s both}
-.btn-a{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.8rem 2rem;border-radius:100px;
-  background:var(--g1);color:#fff;font-weight:600;font-size:.88rem;letter-spacing:.5px;
-  box-shadow:0 0 30px rgba(91,33,182,.4);transition:var(--tr);
-  position:relative;overflow:hidden;
-}
-.btn-a::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);
-  opacity:0;transition:opacity.3s;
-}
-.btn-a:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(91,33,182,.65)}
-.btn-a:hover::after{opacity:1}
-.btn-b{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.8rem 2rem;border-radius:100px;
-  border:1px solid var(--glassbr);color:var(--mist);
-  font-weight:500;font-size:.88rem;letter-spacing:.5px;
-  backdrop-filter:blur(10px);transition:var(--tr);
-}
-.btn-b:hover{border-color:var(--lavender);color:#fff;transform:translateY(-3px)}
-/* hero orbs */
-.h-orbs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.ho{position:absolute;border-radius:50%;filter:blur(90px);opacity:.12}
-.ho1{width:700px;height:700px;background:#5b21b6;top:-200px;left:-250px;animation:hof 12s ease-in-out infinite alternate}
-.ho2{width:600px;height:600px;background:#1a1464;top:50px;right:-200px;animation:hof 16s ease-in-out infinite alternate-reverse}
-.ho3{width:500px;height:500px;background:#3b82f6;bottom:-100px;left:30%;animation:hof 10s ease-in-out infinite alternate}
-.ho4{width:300px;height:300px;background:var(--amber);bottom:30%;right:15%;opacity:.05;animation:hof 8s ease-in-out infinite alternate-reverse}
-/* scroll hint */
-.scroll-hint{
-  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:.5rem;
-  animation:fadeD 1s 1.2s both;
-}
-.scroll-hint span{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--lavender);opacity:.45}
-.scroll-mouse{
-  width:22px;height:34px;border:1.5px solid rgba(167,139,250,.3);
-  border-radius:12px;display:flex;justify-content:center;padding-top:6px;
-}
-.scroll-mouse::after{
-  content:'';width:3px;height:7px;background:var(--lavender);
-  border-radius:2px;animation:scrollD 2s infinite;
-}
-
-/* ============================================================
-   STATS BAND
-============================================================ */
-.stats-band{
-  position:relative;z-index:3;
-  background:linear-gradient(90deg,rgba(26,20,100,.7),rgba(91,33,182,.2),rgba(26,20,100,.7));
-  border-top:1px solid var(--glassbr);border-bottom:1px solid var(--glassbr);
-  padding:2.5rem 0;backdrop-filter:blur(16px);
-  overflow:hidden;
-}
-.stats-band::before{
-  content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.stats-inner{
-  max-width:1200px;margin:0 auto;padding:0 2rem;
-  display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;
-}
-.stat-cell{
-  display:flex;flex-direction:column;align-items:center;gap:.35rem;
-  text-align:center;padding:1rem;
-  border-right:1px solid var(--glassbr);
-}
-.stat-cell:last-child{border-right:none}
-.stat-n{
-  font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:2px;
-  background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat-l{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--lavender);opacity:.65}
-
-/* ============================================================
-   ABOUT / INFORMASI
-============================================================ */
-#informasi{padding:7rem 0 6rem}
-.about-wrap{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:4rem;align-items:start;
-}
-.about-left{}
-.about-tag-list{display:flex;flex-wrap:wrap;gap:.6rem;margin:2rem 0}
-.atag{
-  padding:.35rem .9rem;border-radius:100px;
-  font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
-  border:1px solid;
-}
-.atag-p{background:rgba(124,58,237,.15);color:var(--lavender);border-color:rgba(124,58,237,.3)}
-.atag-b{background:rgba(59,130,246,.12);color:var(--azure);border-color:rgba(59,130,246,.3)}
-.atag-g{background:rgba(245,158,11,.1);color:var(--amber);border-color:rgba(245,158,11,.25)}
-.about-body{
-  font-size:.95rem;line-height:1.9;color:rgba(248,246,255,.75);
-  margin-bottom:1.2rem;
-}
-.about-quote{
-  border-left:3px solid var(--grape);padding:.8rem 0 .8rem 1.4rem;
-  margin:2rem 0;
-}
-.about-quote blockquote{
-  font-family:'Lora',serif;font-style:italic;font-size:1.05rem;
-  color:var(--mist);line-height:1.7;
-}
-.about-quote cite{display:block;margin-top:.4rem;font-size:.78rem;color:var(--lavender);opacity:.65;letter-spacing:1px}
-/* info cards right */
-.about-right{display:flex;flex-direction:column;gap:1.2rem}
-.info-pill{
-  display:flex;gap:1rem;align-items:flex-start;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:18px;padding:1.4rem 1.6rem;
-  transition:var(--tr);position:relative;overflow:hidden;
-}
-.info-pill::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(124,58,237,.08),transparent);
-  opacity:0;transition:opacity.3s;
-}
-.info-pill:hover{border-color:var(--glassbrh);transform:translateX(5px)}
-.info-pill:hover::before{opacity:1}
-.ip-icon{
-  width:44px;height:44px;flex-shrink:0;border-radius:12px;
-  background:linear-gradient(135deg,var(--violet),var(--royal));
-  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
-}
-.ip-body h4{font-size:.88rem;font-weight:600;color:var(--lavender);margin-bottom:.25rem;letter-spacing:.5px}
-.ip-body p{font-size:.84rem;color:rgba(248,246,255,.6);line-height:1.65}
-/* vision pillars */
-.pillars{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:5rem;
-}
-.pillar{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:20px;padding:2rem 1.6rem;
-  text-align:center;transition:var(--tr);
-  position:relative;overflow:hidden;
-}
-.pillar::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:var(--g4);transform:scaleX(0);transform-origin:left;transition:transform.4s;
-}
-.pillar:hover{border-color:var(--glassbrh);transform:translateY(-6px)}
-.pillar:hover::after{transform:scaleX(1)}
-.pillar-num{
-  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;
-  background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(96,165,250,.2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  line-height:1;margin-bottom:1rem;
-}
-.pillar h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--mist);margin-bottom:.7rem}
-.pillar p{font-size:.84rem;color:rgba(248,246,255,.55);line-height:1.7}
-
-/* TIMELINE */
-.timeline-wrap{margin-top:6rem}
-.tl-header{text-align:center;margin-bottom:4rem}
-.tl-track{
-  position:relative;max-width:900px;margin:0 auto;
-  padding-left:3rem;
-}
-.tl-track::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
-  background:linear-gradient(to bottom,transparent,var(--grape) 15%,var(--iris) 85%,transparent);
-}
-.tl-item{
-  position:relative;margin-bottom:2.8rem;padding-left:1.6rem;
-}
-.tl-item::before{
-  content:'';position:absolute;left:-5px;top:6px;
-  width:11px;height:11px;border-radius:50%;
-  background:var(--grape);border:2px solid var(--mist);
-  box-shadow:0 0 12px rgba(124,58,237,.5);
-  transition:var(--tr);
-}
-.tl-item:hover::before{transform:scale(1.4);background:var(--amber)}
-.tl-year{
-  font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;
-  color:var(--amber);margin-bottom:.35rem;
-}
-.tl-title{font-size:1rem;font-weight:600;color:var(--mist);margin-bottom:.3rem}
-.tl-desc{font-size:.85rem;color:rgba(248,246,255,.5);line-height:1.65}
-.tl-item.current::before{background:var(--amber);box-shadow:0 0 20px rgba(245,158,11,.6);animation:glow 2s infinite}
-.tl-item.current .tl-year{color:var(--amber);text-shadow:0 0 15px rgba(245,158,11,.4)}
-.tl-now-badge{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);
-  border-radius:100px;padding:.2rem .8rem;
-  font-size:.68rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--amber);margin-left:.8rem;
-}
-
-/* ============================================================
-   THEME SECTION
-============================================================ */
-#theme{padding:6rem 0;overflow:hidden}
-.theme-inner{
-  max-width:1200px;margin:0 auto;padding:0 2rem;
-  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
-}
-.theme-visual{position:relative}
-.theme-hexgrid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
-}
-.hex-card{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:20px;padding:1.8rem 1.4rem;text-align:center;
-  transition:var(--tr);position:relative;overflow:hidden;
-}
-.hex-card::before{
-  content:'';position:absolute;top:-30px;right:-30px;
-  width:80px;height:80px;border-radius:50%;
-  background:var(--grape);opacity:.06;
-  transition:all.4s;
-}
-.hex-card:hover{border-color:var(--glassbrh);transform:translateY(-5px) scale(1.02)}
-.hex-card:hover::before{opacity:.15;transform:scale(1.5)}
-.hex-icon{font-size:2rem;margin-bottom:.8rem}
-.hex-card h4{font-size:.88rem;font-weight:600;color:var(--mist);margin-bottom:.4rem}
-.hex-card p{font-size:.78rem;color:rgba(248,246,255,.45);line-height:1.6}
-.theme-info h2{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;
-  color:var(--white);line-height:1.35;margin-bottom:1.5rem;
-}
-.theme-info h2 em{
-  background:var(--ggold);-webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;background-clip:text;font-style:normal;
-}
-.theme-info p{font-size:.93rem;color:rgba(248,246,255,.65);line-height:1.85;margin-bottom:1.2rem}
-.theme-values{display:flex;flex-direction:column;gap:.7rem;margin-top:2rem}
-.tv-row{
-  display:flex;align-items:center;gap:1rem;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:12px;padding:.9rem 1.2rem;
-  transition:var(--tr);
-}
-.tv-row:hover{border-color:var(--glassbrh);padding-left:1.6rem}
-.tv-dot{width:8px;height:8px;border-radius:50%;background:var(--g4);flex-shrink:0}
-.tv-row span{font-size:.88rem;color:var(--mist)}
-
-/* ============================================================
-   LOMBA SECTION
-============================================================ */
-#lomba{padding:7rem 0 6rem}
-.lomba-intro{max-width:700px;margin-bottom:4rem}
-/* filter tabs */
-.filter-tabs{
-  display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:3rem;
-}
-.ftab{
-  padding:.45rem 1.2rem;border-radius:100px;
-  font-size:.76rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
-  border:1px solid var(--glassbr);color:rgba(248,246,255,.5);
-  transition:var(--tr);
-}
-.ftab.on,.ftab:hover{
-  background:var(--g1);color:#fff;
-  border-color:transparent;box-shadow:0 0 20px rgba(91,33,182,.3);
-}
-/* lomba grid */
-.lomba-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;
-}
-.lcard{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:24px;overflow:hidden;
-  transition:var(--tr);position:relative;
-}
-.lcard:hover{transform:translateY(-8px);border-color:var(--glassbrh);box-shadow:0 30px 60px rgba(0,0,0,.4)}
-.lcard-head{
-  padding:2rem 2rem 1.5rem;
-  position:relative;overflow:hidden;
-}
-.lcard-head-bg{
-  position:absolute;inset:0;opacity:.12;
-  transition:opacity.4s;
-}
-.lcard:hover .lcard-head-bg{opacity:.22}
-.lcard-badge{
-  display:inline-flex;align-items:center;gap:.35rem;
-  padding:.28rem .8rem;border-radius:100px;
-  font-size:.66rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  position:relative;z-index:1;margin-bottom:1.2rem;
-}
-.badge-smp{background:rgba(124,58,237,.2);color:var(--lavender);border:1px solid rgba(124,58,237,.35)}
-.badge-sma{background:rgba(59,130,246,.15);color:var(--azure);border:1px solid rgba(59,130,246,.3)}
-.badge-all{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
-.lcard-icon{font-size:2.6rem;margin-bottom:1rem;display:block;position:relative;z-index:1}
-.lcard h3{
-  font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;
-  color:var(--white);margin-bottom:.5rem;position:relative;z-index:1;
-}
-.lcard-desc{font-size:.84rem;color:rgba(248,246,255,.55);line-height:1.7;margin-bottom:1.5rem;position:relative;z-index:1}
-.lcard-body{padding:0 2rem 2rem}
-.lcard-meta{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
-.lmeta-row{
-  display:flex;align-items:center;gap:.6rem;
-  font-size:.8rem;color:rgba(248,246,255,.5);
-}
-.lmeta-row svg{opacity:.5;flex-shrink:0}
-.lcard-prize{
-  display:flex;align-items:center;gap:.6rem;
-  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
-  border-radius:10px;padding:.7rem 1rem;margin-bottom:1.4rem;
-}
-.lcard-prize span:first-child{font-size:1.1rem}
-.prize-text{font-size:.82rem;color:var(--amber);font-weight:600}
-.prize-sub{font-size:.72rem;color:rgba(248,246,255,.4)}
-.lcard-btn{
-  display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(135deg,rgba(91,33,182,.25),rgba(26,20,100,.25));
-  border:1px solid rgba(124,58,237,.25);
-  border-radius:12px;padding:.8rem 1.1rem;
-  font-size:.82rem;font-weight:600;color:var(--lavender);
-  transition:var(--tr);width:100%;text-align:left;
-}
-.lcard-btn:hover{background:var(--g1);color:#fff;border-color:transparent;transform:scale(1.02)}
-/* hadiah podium */
-.podium-section{
-  margin-top:5rem;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:28px;padding:3.5rem;
-  position:relative;overflow:hidden;
-}
-.podium-section::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--grape),var(--sky),var(--amber),var(--grape));
-  background-size:200%;animation:shine 3s linear infinite;
-}
-.podium-title{
-  font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;
-  color:var(--white);text-align:center;margin-bottom:.5rem;
-}
-.podium-sub{text-align:center;font-size:.85rem;color:rgba(248,246,255,.45);margin-bottom:3rem}
-.podium-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-.podium-item{
-  display:flex;flex-direction:column;align-items:center;gap:.8rem;
-  padding:2rem 1.5rem;border-radius:20px;
-  border:1px solid var(--glassbr);
-  background:rgba(255,255,255,.025);
-  transition:var(--tr);
-}
-.podium-item:hover{border-color:var(--glassbrh);transform:translateY(-5px)}
-.podium-item.gold{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05)}
-.podium-medal{font-size:3rem}
-.podium-rank{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(248,246,255,.4)}
-.podium-amount{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--mist)}
-.podium-item.gold .podium-amount{color:var(--amber);text-shadow:0 0 20px rgba(245,158,11,.3)}
-.podium-extras{display:flex;flex-direction:column;gap:.3rem;align-items:center}
-.podium-extras span{
-  font-size:.75rem;background:rgba(167,139,250,.1);
-  border:1px solid rgba(167,139,250,.15);border-radius:100px;
-  padding:.2rem .7rem;color:var(--lavender);
-}
-/* registration strip */
-.reg-strip{
-  margin-top:3rem;
-  background:linear-gradient(135deg,rgba(91,33,182,.2),rgba(59,130,246,.1));
-  border:1px solid rgba(124,58,237,.25);
-  border-radius:20px;padding:2rem 2.5rem;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;
-}
-.reg-strip-info h4{font-size:1.1rem;font-weight:700;color:var(--mist);margin-bottom:.3rem}
-.reg-strip-info p{font-size:.85rem;color:rgba(248,246,255,.5)}
-
-/* ============================================================
-   TALKSHOW
-============================================================ */
-#talkshow{
-  padding:7rem 0 6rem;
-  background:linear-gradient(180deg,transparent,rgba(26,20,100,.2) 50%,transparent);
-}
-.ts-hero{
-  display:grid;grid-template-columns:1.1fr 1fr;
-  gap:4rem;align-items:start;margin-bottom:6rem;
-}
-.ts-left{}
-.ts-date-badge{
-  display:inline-flex;align-items:center;gap:.6rem;
-  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);
-  border-radius:100px;padding:.4rem 1.1rem;
-  font-size:.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--amber);margin-bottom:2rem;
-}
-.ts-left h2{
-  font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,3rem);
-  font-weight:900;line-height:1.2;
-  color:var(--white);margin-bottom:1.5rem;
-}
-.ts-left h2 span{
-  background:var(--gtext);-webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;background-clip:text;
-}
-.ts-left p{font-size:.93rem;color:rgba(248,246,255,.65);line-height:1.85;margin-bottom:1rem}
-.ts-features{display:flex;flex-direction:column;gap:.8rem;margin:2rem 0}
-.ts-feat{
-  display:flex;align-items:center;gap:.9rem;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:12px;padding:.85rem 1.2rem;
-  font-size:.86rem;color:var(--mist);
-  transition:var(--tr);
-}
-.ts-feat:hover{border-color:var(--glassbrh);padding-left:1.6rem}
-.ts-feat-icon{
-  width:34px;height:34px;border-radius:9px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--violet),var(--royal));
-  display:flex;align-items:center;justify-content:center;font-size:.9rem;
-}
-.ts-right{}
-/* detail card */
-.ts-detail-card{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:24px;padding:2.5rem;
-  position:relative;overflow:hidden;
-}
-.ts-detail-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--g4);
-}
-.ts-detail-row{
-  display:flex;align-items:flex-start;gap:1rem;
-  padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);
-}
-.ts-detail-row:last-child{border-bottom:none}
-.tdr-icon{
-  width:38px;height:38px;border-radius:10px;flex-shrink:0;
-  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.2);
-  display:flex;align-items:center;justify-content:center;font-size:.95rem;
-}
-.tdr-body label{display:block;font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--lavender);opacity:.6;margin-bottom:.25rem}
-.tdr-body span{font-size:.9rem;font-weight:500;color:var(--white)}
-
-/* speakers */
-.speakers-section{margin-top:5rem}
-.speakers-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem;
-}
-.spk-card{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:24px;padding:2.5rem 2rem;text-align:center;
-  transition:var(--tr);position:relative;overflow:hidden;
-}
-.spk-card::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:var(--g4);transform:scaleX(0);transition:transform.4s;
-}
-.spk-card:hover{border-color:var(--glassbrh);transform:translateY(-8px)}
-.spk-card:hover::after{transform:scaleX(1)}
-.spk-avatar{
-  width:96px;height:96px;border-radius:50%;
-  margin:0 auto 1.5rem;
-  background:linear-gradient(135deg,var(--violet),var(--royal));
-  display:flex;align-items:center;justify-content:center;font-size:2.2rem;
-  border:2px solid var(--glassbr);
-  position:relative;
-}
-.spk-avatar::after{
-  content:'';position:absolute;inset:-4px;border-radius:50%;
-  border:1px solid rgba(167,139,250,.2);
-}
-.spk-card h4{font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
-.spk-role{font-size:.75rem;color:var(--lavender);letter-spacing:1px;margin-bottom:1rem}
-.spk-card p{font-size:.83rem;color:rgba(248,246,255,.5);line-height:1.65;margin-bottom:1.2rem}
-.spk-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem}
-.spk-tag{
-  padding:.2rem .65rem;border-radius:100px;
-  font-size:.68rem;background:rgba(167,139,250,.1);
-  border:1px solid rgba(167,139,250,.2);color:var(--lavender);
-}
-
-/* schedule */
-.schedule-section{
-  margin-top:5rem;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:28px;padding:3.5rem;
-}
-.sch-title{
-  font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
-  color:var(--white);text-align:center;margin-bottom:3rem;
-}
-.sch-timeline{display:flex;flex-direction:column;gap:0}
-.sch-item{
-  display:grid;grid-template-columns:100px 1fr;
-  gap:1.5rem;align-items:start;
-  padding:1.3rem 0;
-  border-bottom:1px solid rgba(255,255,255,.04);
-  transition:var(--tr);
-}
-.sch-item:last-child{border-bottom:none}
-.sch-item:hover{padding-left:.8rem}
-.sch-time{
-  font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;
-  color:var(--lavender);padding-top:2px;
-}
-.sch-event-wrap{display:flex;gap:1rem;align-items:flex-start}
-.sch-dot-col{
-  display:flex;flex-direction:column;align-items:center;
-  padding-top:5px;
-}
-.sch-dot{
-  width:10px;height:10px;border-radius:50%;
-  background:var(--grape);border:2px solid var(--lavender);
-  flex-shrink:0;
-}
-.sch-dot.special{background:var(--amber);border-color:var(--amber);box-shadow:0 0 10px rgba(245,158,11,.4)}
-.sch-line-seg{width:1px;height:100%;min-height:30px;background:rgba(124,58,237,.2);margin-top:4px}
-.sch-event h5{font-size:.95rem;font-weight:600;color:var(--mist);margin-bottom:.25rem}
-.sch-event p{font-size:.82rem;color:rgba(248,246,255,.45);line-height:1.6}
-.sch-chip{
-  display:inline-flex;align-items:center;gap:.3rem;
-  margin-top:.5rem;
-  padding:.2rem .65rem;border-radius:100px;font-size:.68rem;font-weight:600;letter-spacing:.5px;
-  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--amber);
-}
-
-/* ============================================================
-   FAQ SECTION
-============================================================ */
-#faq{padding:6rem 0}
-.faq-wrap{
-  max-width:800px;margin:3rem auto 0;
-  display:flex;flex-direction:column;gap:.8rem;
-}
-.faq-item{
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:16px;overflow:hidden;transition:border-color.3s;
-}
-.faq-item.open{border-color:var(--glassbrh)}
-.faq-q{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.3rem 1.6rem;cursor:none;
-  font-size:.93rem;font-weight:600;color:var(--mist);
-  gap:1rem;
-}
-.faq-icon{
-  width:28px;height:28px;border-radius:50%;flex-shrink:0;
-  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;color:var(--lavender);transition:transform.3s;
-}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(124,58,237,.3)}
-.faq-a{
-  max-height:0;overflow:hidden;transition:max-height.4s ease,padding.4s;
-  padding:0 1.6rem;
-}
-.faq-item.open .faq-a{max-height:300px;padding:.5rem 1.6rem 1.4rem}
-.faq-a p{font-size:.88rem;color:rgba(248,246,255,.6);line-height:1.75}
-.faq-a a{color:var(--lavender);text-decoration:underline;text-underline-offset:3px}
-
-/* ============================================================
-   GALLERY / ATMOSPHERE
-============================================================ */
-#galeri{padding:6rem 0;overflow:hidden}
-.gallery-marquee-wrap{
-  overflow:hidden;margin-top:3rem;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
-}
-.gallery-marquee{
-  display:flex;gap:1.2rem;
-  animation:marquee 30s linear infinite;
-  width:max-content;
-}
-.gallery-marquee:hover{animation-play-state:paused}
-.gallery-card{
-  width:280px;flex-shrink:0;
-  background:var(--glass);border:1px solid var(--glassbr);
-  border-radius:20px;overflow:hidden;
-  transition:var(--tr);
-}
-.gallery-card:hover{border-color:var(--glassbrh);transform:translateY(-5px)}
-.gallery-img{
-  height:170px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:4rem;position:relative;overflow:hidden;
-}
-.gallery-img::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 50%,rgba(4,1,15,.7));
-}
-.gallery-cap{
-  padding:1rem 1.2rem;
-  font-size:.8rem;font-weight:600;color:var(--mist);
-}
-.gallery-cap-sub{font-size:.72rem;color:rgba(248,246,255,.4);margin-top:.2rem}
-/* second row */
-.gallery-marquee2{
-  display:flex;gap:1.2rem;
-  animation:marquee2 35s linear infinite;
-  width:max-content;margin-top:1.2rem;
-}
-.gallery-marquee2:hover{animation-play-state:paused}
-
-/* ============================================================
-   CTA BAND
-============================================================ */
-.cta-band{
-  margin:4rem 0;padding:5rem 2rem;
-  background:linear-gradient(135deg,var(--violet),var(--royal),var(--iris));
-  position:relative;overflow:hidden;
-  text-align:center;
-}
-.cta-band::before{
-  content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.cta-band > * {position:relative;z-index:1}
-.cta-band h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2rem,5vw,4rem);letter-spacing:4px;
-  color:#fff;margin-bottom:1rem;
-}
-.cta-band p{font-size:1rem;color:rgba(255,255,255,.75);max-width:500px;margin:0 auto 2.5rem;line-height:1.7}
-.cta-band-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-white{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.85rem 2.2rem;border-radius:100px;
-  background:#fff;color:var(--violet);
-  font-weight:700;font-size:.9rem;letter-spacing:.5px;
-  transition:var(--tr);
-}
-.btn-white:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.btn-outline-w{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.85rem 2.2rem;border-radius:100px;
-  border:2px solid rgba(255,255,255,.5);color:#fff;
-  font-weight:500;font-size:.9rem;
-  transition:var(--tr);
-}
-.btn-outline-w:hover{border-color:#fff;transform:translateY(-3px)}
-
-/* ============================================================
-   FOOTER
-============================================================ */
-footer{
-  position:relative;z-index:3;
-  border-top:1px solid var(--glassbr);
-  padding:5rem 0 2rem;
-  background:rgba(4,1,15,.9);
-  backdrop-filter:blur(20px);
-}
-.ft-top{
-  max-width:1240px;margin:0 auto;padding:0 2rem;
-  display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;
-  gap:3.5rem;padding-bottom:4rem;
-  border-bottom:1px solid var(--glassbr);
-}
-.ft-brand-logo{
-  font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:4px;
-  background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:1rem;
-}
-.ft-brand p{font-size:.85rem;color:rgba(248,246,255,.45);line-height:1.8;max-width:260px}
-.ft-socials{display:flex;gap:.7rem;margin-top:1.5rem}
-.ft-soc{
-  width:36px;height:36px;border-radius:10px;
-  background:var(--glass);border:1px solid var(--glassbr);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;transition:var(--tr);
-}
-.ft-soc:hover{border-color:var(--glassbrh);transform:translateY(-3px);background:rgba(124,58,237,.15)}
-.ft-col h5{
-  font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--lavender);margin-bottom:1.4rem;
-}
-.ft-col ul{display:flex;flex-direction:column;gap:.8rem}
-.ft-col ul li a{
-  font-size:.86rem;color:rgba(248,246,255,.45);
-  transition:color.3s;
-}
-.ft-col ul li a:hover{color:var(--mist)}
-.ft-bottom{
-  max-width:1240px;margin:0 auto;padding:2rem 2rem 0;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
-}
-.ft-copy{font-size:.78rem;color:rgba(248,246,255,.3)}
-.ft-made{font-size:.78rem;color:rgba(248,246,255,.3)}
-.ft-made span{color:var(--lavender)}
-
-/* ============================================================
-   MODALS
-============================================================ */
-.modal-bg{
-  position:fixed;inset:0;z-index:800;
-  background:rgba(4,1,15,.85);backdrop-filter:blur(16px);
-  display:flex;align-items:center;justify-content:center;padding:2rem;
-  opacity:0;pointer-events:none;transition:opacity.35s;
-}
-.modal-bg.on{opacity:1;pointer-events:all}
-.modal-box{
-  background:linear-gradient(145deg,#0e0b38,#130d4a);
-  border:1px solid var(--glassbr);border-radius:28px;
-  padding:3rem;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;
-  transform:translateY(24px) scale(.97);transition:transform.35s;
-  position:relative;
-}
-.modal-bg.on .modal-box{transform:none}
-.modal-close-btn{
-  position:absolute;top:1.5rem;right:1.5rem;
-  width:34px;height:34px;border-radius:50%;
-  background:var(--glass);border:1px solid var(--glassbr);
-  color:var(--mist);font-size:1rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:var(--tr);
-}
-.modal-close-btn:hover{background:rgba(220,38,38,.2);border-color:rgba(220,38,38,.3);color:#fff}
-.modal-label{
-  display:inline-block;
-  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);
-  border-radius:100px;padding:.25rem .85rem;
-  font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--lavender);margin-bottom:1.2rem;
-}
-.modal-title{
-  font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;
-  color:var(--white);margin-bottom:1.5rem;
-}
-.modal-section{margin-bottom:1.5rem}
-.modal-section h4{
-  font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:var(--lavender);margin-bottom:.8rem;padding-bottom:.5rem;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.modal-section ul{display:flex;flex-direction:column;gap:.5rem}
-.modal-section ul li{
-  display:flex;align-items:flex-start;gap:.6rem;
-  font-size:.87rem;color:rgba(248,246,255,.65);line-height:1.65;
-}
-.modal-section ul li::before{
-  content:'›';color:var(--lavender);font-size:1rem;line-height:1.3;flex-shrink:0;
-}
-.modal-cta-row{display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap}
-
-/* ============================================================
-   KEYFRAMES
-============================================================ */
-@keyframes fadeD{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
-@keyframes hof{from{transform:translate(0,0) scale(1)}to{transform:translate(25px,18px) scale(1.06)}}
-@keyframes scrollD{0%{transform:translateY(0);opacity:1}100%{transform:translateY(10px);opacity:0}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-@keyframes glow{0%,100%{box-shadow:0 0 12px rgba(245,158,11,.4)}50%{box-shadow:0 0 28px rgba(245,158,11,.8)}}
-@keyframes shine{from{background-position:0%}to{background-position:200%}}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes marquee2{from{transform:translateX(-50%)}to{transform:translateX(0%)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
-/* ============================================================
-   RESPONSIVE
-============================================================ */
-@media(max-width:1024px){
-  #nav{padding:1rem 2rem}
-  #nav.scrolled{padding:.75rem 2rem}
-  .about-wrap{grid-template-columns:1fr}
-  .theme-inner{grid-template-columns:1fr}
-  .lomba-grid{grid-template-columns:1fr 1fr}
-  .ts-hero{grid-template-columns:1fr}
-  .speakers-grid{grid-template-columns:1fr 1fr}
-  .ft-top{grid-template-columns:1fr 1fr;gap:2.5rem}
-}
-@media(max-width:768px){
-  .nav-links,.nav-cta{display:none}
-  .ham{display:flex}
-  .lomba-grid{grid-template-columns:1fr}
-  .speakers-grid{grid-template-columns:1fr}
-  .podium-grid{grid-template-columns:1fr}
-  .stats-inner{grid-template-columns:repeat(2,1fr)}
-  .stat-cell{border-right:none;border-bottom:1px solid var(--glassbr)}
-  .pillars{grid-template-columns:1fr}
-  .theme-hexgrid{grid-template-columns:1fr 1fr}
-  .ft-top{grid-template-columns:1fr}
-  .schedule-section{padding:2rem}
-  .sch-item{grid-template-columns:70px 1fr}
-  .hero-cd .cd-box{padding:.8rem 1rem;min-width:64px}
-  .cd-num{font-size:1.8rem}
-  .reg-strip{flex-direction:column;text-align:center}
-  .cta-band-btns{flex-direction:column;align-items:center}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Performance Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --body-bg: #f0f2f5;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--body-bg);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            background: linear-gradient(180deg, var(--dark), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--success);
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0 15px;
+        }
+        
+        .nav-links li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .nav-links i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .header h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+        }
+        
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+        
+        .date-filter button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .date-filter button.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .revenue .stat-icon {
+            background: rgba(67, 97, 238, 0.15);
+            color: var(--primary);
+        }
+        
+        .roi .stat-icon {
+            background: rgba(76, 201, 240, 0.15);
+            color: var(--success);
+        }
+        
+        .expenses .stat-icon {
+            background: rgba(247, 37, 133, 0.15);
+            color: var(--warning);
+        }
+        
+        .growth .stat-icon {
+            background: rgba(29, 53, 87, 0.15);
+            color: var(--dark);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-change {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .positive {
+            color: #2ecc71;
+        }
+        
+        .negative {
+            color: #e74c3c;
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chart-actions button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+        
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            color: var(--gray);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status.completed {
+            background: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+        }
+        
+        .status.pending {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f39c12;
+        }
+        
+        .status.failed {
+            background: rgba(231, 76, 60, 0.15);
+            color: #c0392b;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- CURSOR -->
-<div id="cur"></div>
-<div id="cur2"></div>
-
-<!-- BG CANVAS -->
-<canvas id="bgc"></canvas>
-
-<!-- ============================================================
-     NAVBAR
-============================================================ -->
-<nav id="nav">
-  <a href="#home" class="nav-logo">
-    <div class="nav-logo-badge">L9</div>
-    <span class="nav-logo-text">LENTSCAPE</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#home" class="on" data-s="home">Home</a></li>
-    <li><a href="#informasi" data-s="informasi">Informasi</a></li>
-    <li><a href="#lomba" data-s="lomba">Lomba</a></li>
-    <li><a href="#talkshow" data-s="talkshow">Talkshow</a></li>
-    <li><a href="#faq" data-s="faq">FAQ</a></li>
-  </ul>
-  <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="nav-links nav-cta">📲 Daftar Sekarang</a>
-  <button class="ham" id="ham" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Mobile menu -->
-<div class="mob-menu" id="mobMenu">
-  <a href="#home" class="mob-link">Home</a>
-  <a href="#informasi" class="mob-link">Informasi</a>
-  <a href="#lomba" class="mob-link">Lomba</a>
-  <a href="#talkshow" class="mob-link">Talkshow</a>
-  <a href="#faq" class="mob-link">FAQ</a>
-</div>
-
-<!-- ============================================================
-     HERO / HOME
-============================================================ -->
-<section id="home">
-  <div class="h-orbs">
-    <div class="ho ho1"></div>
-    <div class="ho ho2"></div>
-    <div class="ho ho3"></div>
-    <div class="ho ho4"></div>
-  </div>
-
-  <div class="hero-kicker">
-    <i></i>
-    OSIS SMAIT Ummul Quro Bogor — Proudly Presents
-  </div>
-
-  <h1 class="hero-main-title">LENTSCAPE</h1>
-
-  <div class="hero-version-row">
-    <div class="hero-ver-line"></div>
-    <div class="hero-ver-num">9 · 0</div>
-    <div class="hero-ver-line r"></div>
-  </div>
-
-  <p class="hero-theme-text">
-    "Echoes of Neosantara: Building Indonesia's Future<br/>through National Values and Collaboration"
-  </p>
-  <p class="hero-org">OSIS SMAIT Ummul Quro Bogor &nbsp;·&nbsp; Kota Bogor</p>
-
-  <!-- Countdown -->
-  <div class="hero-cd">
-    <div class="cd-box"><div class="cd-num" id="cd-d">00</div><div class="cd-label">Hari</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-h">00</div><div class="cd-label">Jam</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Menit</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Detik</div></div>
-  </div>
-
-  <div class="hero-btns">
-    <a href="#lomba" class="btn-a">🏆 <span>Ikuti Lomba</span></a>
-    <a href="#talkshow" class="btn-a" style="background:var(--g3)">🎤 <span>Hadiri Talkshow</span></a>
-    <a href="#informasi" class="btn-b">📖 Tentang Lentscape</a>
-  </div>
-
-  <div class="scroll-hint">
-    <div class="scroll-mouse"></div>
-    <span>Scroll</span>
-  </div>
-</section>
-
-<!-- STATS BAND -->
-<div class="stats-band">
-  <div class="stats-inner">
-    <div class="stat-cell rv">
-      <div class="stat-n" data-c="9">0</div>
-      <div class="stat-l">Tahun Berkarya</div>
-    </div>
-    <div class="stat-cell rv d1">
-      <div class="stat-n" data-c="6">0</div>
-      <div class="stat-l">Cabang Lomba</div>
-    </div>
-    <div class="stat-cell rv d2">
-      <div class="stat-n" data-c="500">0</div>
-      <div class="stat-l">Peserta Target</div>
-    </div>
-    <div class="stat-cell rv d3">
-      <div class="stat-n" data-c="3">0</div>
-      <div class="stat-l">Narasumber</div>
-    </div>
-    <div class="stat-cell rv d4">
-      <div class="stat-n" data-c="10">0</div>
-      <div class="stat-l">Juta Total Hadiah</div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     INFORMASI
-============================================================ -->
-<section id="informasi">
-  <div class="container">
-    <!-- about -->
-    <div class="about-wrap">
-      <div class="about-left">
-        <div class="eyebrow rv">Tentang Acara</div>
-        <h2 class="sec-title rv d1">Apa Itu<br/>Lentscape 9.0?</h2>
-        <div class="about-tag-list rv d2">
-          <span class="atag atag-p">Kepemimpinan</span>
-          <span class="atag atag-b">Inovasi</span>
-          <span class="atag atag-g">Nasionalisme</span>
-          <span class="atag atag-p">Kolaborasi</span>
-          <span class="atag atag-b">Neosantara</span>
-          <span class="atag atag-g">Pendidikan</span>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1><i class="fas fa-chart-line"></i> FinDash Pro</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-wallet"></i> Portfolio</a></li>
+                <li><a href="#"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Support</a></li>
+            </ul>
         </div>
-        <p class="about-body rv d2">
-          <strong style="color:var(--lavender)">LENTSCAPE 9.0</strong> adalah puncak tahunan dari tradisi kepemimpinan yang telah dirajut oleh OSIS SMAIT Ummul Quro Bogor selama hampir satu dekade. Setiap tahunnya, Lentscape hadir sebagai arena bagi generasi muda untuk mengasah jiwa kepemimpinan, mengukur kemampuan diri, dan membangun jaringan pertemanan lintas sekolah.
-        </p>
-        <p class="about-body rv d2">
-          Tahun 2025, Lentscape memasuki babak ke-9 dengan tema yang lebih dalam dan visioner: <em style="color:var(--mist)">"Echoes of Neosantara: Building Indonesia's Future through National Values and Collaboration."</em> Tema ini bukan sekadar slogan — ia adalah panggilan untuk seluruh generasi Z Indonesia agar berani bermimpi, berkolaborasi, dan membangun bangsa dengan bekal nilai-nilai luhur Nusantara.
-        </p>
-        <div class="about-quote rv d3">
-          <blockquote>"Neosantara bukan tentang masa lalu yang diromantisasi, melainkan masa depan yang dibangun di atas pondasi nilai-nilai terbaik Indonesia."</blockquote>
-          <cite>— Tema Lentscape 9.0</cite>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Financial Dashboard</h2>
+                <div class="date-filter">
+                    <button>Today</button>
+                    <button class="active">This Month</button>
+                    <button>This Year</button>
+                    <button><i class="fas fa-calendar"></i> Custom</button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card revenue">
+                    <div class="stat-header">
+                        <div class="stat-title">Total Revenue</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">$124,580</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 12.4% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card roi">
+                    <div class="stat-header">
+                        <div class="stat-title">ROI</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">24.8%</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 3.2% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card expenses">
+                    <div class="stat-header">
+                        <div class="stat-title">Expenses</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">$42,360</div>
+                    <div class="stat-change negative">
+                        <i class="fas fa-arrow-up"></i> 5.7% from last month
+                    </div>
+                </div>
+                
+                <div class="stat-card growth">
+                    <div class="stat-header">
+                        <div class="stat-title">Growth Rate</div>
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">18.3%</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> 2.1% from last month
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Revenue Overview</div>
+                        <div class="chart-actions">
+                            <button><i class="fas fa-download"></i></button>
+                            <button><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Investment Portfolio</div>
+                        <div class="chart-actions">
+                            <button><i class="fas fa-download"></i></button>
+                            <button><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">ROI by Category</div>
+                        <div class="chart-actions">
+                            <button><i class="fas fa-download"></i></button>
+                            <button><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="roiChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Cash Flow</div>
+                        <div class="chart-actions">
+                            <button><i class="fas fa-download"></i></button>
+                            <button><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="cashFlowChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transactions Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Recent Transactions</div>
+                    <div class="chart-actions">
+                        <button><i class="fas fa-filter"></i> Filter</button>
+                        <button><i class="fas fa-download"></i> Export</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#TRX-00125</td>
+                            <td>Jun 12, 2023</td>
+                            <td>Investment Return</td>
+                            <td>Stocks</td>
+                            <td class="positive">+$4,250.00</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TRX-00124</td>
+                            <td>Jun 10, 2023</td>
+                            <td>Dividend Payment</td>
+                            <td>Dividends</td>
+                            <td class="positive">+$1,850.00</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TRX-00123</td>
+                            <td>Jun 8, 2023</td>
+                            <td>Marketing Campaign</td>
+                            <td>Marketing</td>
+                            <td class="negative">-$3,200.00</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TRX-00122</td>
+                            <td>Jun 5, 2023</td>
+                            <td>Software Subscription</td>
+                            <td>Technology</td>
+                            <td class="negative">-$499.00</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TRX-00121</td>
+                            <td>Jun 3, 2023</td>
+                            <td>Bond Interest</td>
+                            <td>Bonds</td>
+                            <td class="positive">+$850.00</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#TRX-00120</td>
+                            <td>Jun 1, 2023</td>
+                            <td>Real Estate Investment</td>
+                            <td>Property</td>
+                            <td class="positive">+$12,500.00</td>
+                            <td><span class="status completed">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="footer">
+                <p>FinDash Pro Dashboard v3.2.1 | Updated: June 15, 2023</p>
+                <p>© 2023 Financial Analytics Inc. All rights reserved.</p>
+            </div>
         </div>
-        <p class="about-body rv d3">
-          Lentscape 9.0 menghadirkan dua program utama: kompetisi antar pelajar yang melibatkan 6 cabang lomba bergengsi, dan sesi Talkshow Inspiratif bersama tokoh-tokoh pemimpin terpilih yang akan berbagi perspektif tentang kepemimpinan, kolaborasi, dan masa depan Indonesia.
-        </p>
-        <div class="rv d4" style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem">
-          <a href="#lomba" class="btn-a">🏆 Lihat Cabang Lomba</a>
-          <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="btn-b">📲 Instagram Resmi</a>
-        </div>
-      </div>
-      <div class="about-right rvr d1">
-        <div class="info-pill">
-          <div class="ip-icon">📍</div>
-          <div class="ip-body">
-            <h4>Lokasi</h4>
-            <p>SMAIT Ummul Quro Bogor — Jl. Pool Binamarga, Perum Boulevard Raya RT 06/RW 05, Kayu Manis, Tanah Sareal, Kota Bogor 16169</p>
-          </div>
-        </div>
-        <div class="info-pill">
-          <div class="ip-icon">🏫</div>
-          <div class="ip-body">
-            <h4>Penyelenggara</h4>
-            <p>OSIS SMAIT Ummul Quro Bogor — Organisasi siswa yang berdedikasi membentuk pemimpin muda soleh, cendekia, dan berdampak nyata.</p>
-          </div>
-        </div>
-        <div class="info-pill">
-          <div class="ip-icon">🎯</div>
-          <div class="ip-body">
-            <h4>Tujuan & Misi</h4>
-            <p>Menciptakan jiwa kepemimpinan pemuda penerus generasi yang berkualitas, berakhlak mulia, dan siap memimpin Indonesia menuju masa depan yang bermartabat.</p>
-          </div>
-        </div>
-        <div class="info-pill">
-          <div class="ip-icon">👥</div>
-          <div class="ip-body">
-            <h4>Sasaran Peserta</h4>
-            <p>Siswa/i SMP & SMA sederajat se-Jabodetabek dan seluruh Indonesia yang ingin mengukir prestasi dan memperluas wawasan kepemimpinan.</p>
-          </div>
-        </div>
-        <div class="info-pill">
-          <div class="ip-icon">📅</div>
-          <div class="ip-body">
-            <h4>Pendaftaran & Info</h4>
-            <p>Pantau terus akun Instagram <a href="https://www.instagram.com/lentscapeuq/" target="_blank" style="color:var(--lavender)">@lentscapeuq</a> untuk informasi terbaru tentang jadwal, teknis lomba, dan link pendaftaran resmi.</p>
-          </div>
-        </div>
-        <div class="info-pill">
-          <div class="ip-icon">🌐</div>
-          <div class="ip-body">
-            <h4>Media Partner & Kontak</h4>
-            <p>Instagram OSIS: <a href="https://www.instagram.com/osissmaituq/" target="_blank" style="color:var(--lavender)">@osissmaituq</a> &nbsp;|&nbsp; Website: <a href="https://smait.uqb.sch.id/" target="_blank" style="color:var(--lavender)">smait.uqb.sch.id</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- pillars -->
-    <div class="pillars">
-      <div class="pillar rv">
-        <div class="pillar-num">01</div>
-        <h3>Leadership</h3>
-        <p>Membangun karakter pemimpin muda yang visioner, berani bertindak, dan mampu menginspirasi lingkungan sekitarnya.</p>
-      </div>
-      <div class="pillar rv d2">
-        <div class="pillar-num">02</div>
-        <h3>Innovation</h3>
-        <p>Mendorong generasi muda untuk berpikir kreatif, inovatif, dan menemukan solusi atas tantangan bangsa dengan pendekatan baru.</p>
-      </div>
-      <div class="pillar rv d4">
-        <div class="pillar-num">03</div>
-        <h3>Collaboration</h3>
-        <p>Membangun jembatan kolaborasi antar siswa lintas sekolah, daerah, dan latar belakang demi Indonesia yang lebih kuat bersama.</p>
-      </div>
-    </div>
-
-    <!-- timeline -->
-    <div class="timeline-wrap rv">
-      <div class="tl-header">
-        <div class="eyebrow">Perjalanan Lentscape</div>
-        <h2 class="sec-title" style="font-size:clamp(1.6rem,3vw,2.8rem)">Hampir Satu Dekade<br/>Mencetak Pemimpin</h2>
-      </div>
-      <div class="tl-track">
-        <div class="tl-item rv">
-          <div class="tl-year">2017</div>
-          <div class="tl-title">Lentscape 1.0 — Titik Awal</div>
-          <div class="tl-desc">Lahirnya tradisi kepemimpinan tahunan OSIS SMAIT Ummul Quro Bogor. Dengan tekad sederhana namun penuh semangat, Lentscape pertama kali digelar sebagai wadah pengembangan diri pelajar.</div>
-        </div>
-        <div class="tl-item rv d1">
-          <div class="tl-year">2018</div>
-          <div class="tl-title">Lentscape 2.0 — Berkembang</div>
-          <div class="tl-desc">Skala acara diperbesar. Peserta mulai datang dari berbagai sekolah di Bogor dan sekitarnya, menandai bahwa Lentscape telah melampaui batas satu sekolah.</div>
-        </div>
-        <div class="tl-item rv d2">
-          <div class="tl-year">2019</div>
-          <div class="tl-title">Lentscape 3.0 — Talkshow Pertama</div>
-          <div class="tl-desc">Peluncuran format Talkshow kepemimpinan perdana. Dengan tema "Semangat Sumpah Pemuda: Komitmen untuk Bangkit," Lentscape 3.0 menjadi pengalaman yang lebih mendalam bagi peserta.</div>
-        </div>
-        <div class="tl-item rv d2">
-          <div class="tl-year">2020 – 2021</div>
-          <div class="tl-title">Lentscape 4.0 & 5.0 — Adaptasi Digital</div>
-          <div class="tl-desc">Di tengah pandemi global, Lentscape beradaptasi dengan format daring. Sebuah bukti bahwa semangat kepemimpinan tidak dapat dihentikan oleh kondisi apapun.</div>
-        </div>
-        <div class="tl-item rv d3">
-          <div class="tl-year">2022</div>
-          <div class="tl-title">Lentscape 6.0 — Bangkit Lebih Kuat</div>
-          <div class="tl-desc">Dengan tema "Strengthen Your Leadership Values for Greatness in The Future," Lentscape 6.0 menandai kebangkitan penuh dengan format luring yang lebih meriah dari sebelumnya.</div>
-        </div>
-        <div class="tl-item rv d3">
-          <div class="tl-year">2023 – 2024</div>
-          <div class="tl-title">Lentscape 7.0 & 8.0 — Ekspansi Nasional</div>
-          <div class="tl-desc">Rekap peserta terbesar dalam sejarah Lentscape. Kompetisi mulai diikuti peserta dari berbagai provinsi, menegaskan posisi Lentscape sebagai event kepemimpinan pelajar bertaraf nasional.</div>
-        </div>
-        <div class="tl-item current rv d4">
-          <div class="tl-year">2025 <span class="tl-now-badge">⭐ SEKARANG</span></div>
-          <div class="tl-title">Lentscape 9.0 — Echoes of Neosantara</div>
-          <div class="tl-desc">Edisi paling ambisius. Dengan tema "Echoes of Neosantara: Building Indonesia's Future through National Values and Collaboration," Lentscape 9.0 hadir sebagai perayaan satu dekade kepemimpinan pelajar Indonesia yang berdampak.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     THEME SECTION
-============================================================ -->
-<section id="theme">
-  <div class="theme-inner">
-    <div class="theme-visual rvl">
-      <div class="eyebrow" style="justify-content:flex-start">Nilai-Nilai Tema</div>
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:2rem">6 Pilar Neosantara</h3>
-      <div class="theme-hexgrid">
-        <div class="hex-card">
-          <div class="hex-icon">🌿</div>
-          <h4>Bhineka Tunggal Ika</h4>
-          <p>Keberagaman sebagai kekuatan, bukan pembatas</p>
-        </div>
-        <div class="hex-card">
-          <div class="hex-icon">⚡</div>
-          <h4>Inovasi Lokal</h4>
-          <p>Solusi Indonesia untuk masalah Indonesia</p>
-        </div>
-        <div class="hex-card">
-          <div class="hex-icon">🤝</div>
-          <h4>Kolaborasi</h4>
-          <p>Bersama lebih kuat dari sendiri</p>
-        </div>
-        <div class="hex-card">
-          <div class="hex-icon">🏛️</div>
-          <h4>Pancasila</h4>
-          <p>Nilai dasar yang tak lekang oleh zaman</p>
-        </div>
-        <div class="hex-card">
-          <div class="hex-icon">🌱</div>
-          <h4>Keberlanjutan</h4>
-          <p>Membangun untuk generasi berikutnya</p>
-        </div>
-        <div class="hex-card">
-          <div class="hex-icon">💡</div>
-          <h4>Kepemimpinan</h4>
-          <p>Memimpin dengan hati dan ilmu</p>
-        </div>
-      </div>
-    </div>
-    <div class="theme-info rvr">
-      <div class="eyebrow">Tema Lentscape 9.0</div>
-      <h2>"Echoes of <em>Neosantara</em>: Building Indonesia's Future through National Values and Collaboration"</h2>
-      <p>Neosantara adalah konsep Indonesia masa depan yang lahir dari harmoni antara akar budaya Nusantara dan dinamika dunia modern. Kata "Echoes" menggambarkan bagaimana nilai-nilai luhur bangsa bergema melintasi waktu — dari generasi ke generasi, dari desa ke kota, dari masa lalu menuju masa depan.</p>
-      <p>Tema ini mengajak kita untuk merenungkan: <em style="color:var(--mist)">bagaimana kita, sebagai generasi muda Indonesia, dapat menjadi arsitek perubahan yang berakar pada identitas nasional?</em></p>
-      <p>Lentscape 9.0 hadir sebagai ruang untuk menjawab pertanyaan itu — melalui kompetisi, diskusi, dan kolaborasi nyata.</p>
-      <div class="theme-values">
-        <div class="tv-row">
-          <div class="tv-dot"></div>
-          <span>Membangun jiwa pemimpin yang berkarakter Pancasilais</span>
-        </div>
-        <div class="tv-row">
-          <div class="tv-dot"></div>
-          <span>Mendorong inovasi berbasis nilai-nilai kearifan lokal</span>
-        </div>
-        <div class="tv-row">
-          <div class="tv-dot"></div>
-          <span>Mempererat kolaborasi antar pelajar seluruh Indonesia</span>
-        </div>
-        <div class="tv-row">
-          <div class="tv-dot"></div>
-          <span>Menginspirasi generasi muda untuk berperan aktif dalam pembangunan bangsa</span>
-        </div>
-        <div class="tv-row">
-          <div class="tv-dot"></div>
-          <span>Memperkuat rasa kebanggaan terhadap identitas Indonesia</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     LOMBA
-============================================================ -->
-<section id="lomba">
-  <div class="container">
-    <div class="lomba-intro">
-      <div class="eyebrow rv">Kompetisi</div>
-      <h2 class="sec-title rv d1">6 Cabang<br/>Perlombaan</h2>
-      <p class="sec-lead rv d2">Tunjukkan kemampuan terbaikmu di panggung Lentscape 9.0. Setiap lomba dirancang untuk mengasah bakat, kreativitas, dan jiwa kepemimpinanmu.</p>
-    </div>
-    <!-- filter tabs -->
-    <div class="filter-tabs rv">
-      <button class="ftab on" data-f="all">Semua Lomba</button>
-      <button class="ftab" data-f="smp">SMP/Sederajat</button>
-      <button class="ftab" data-f="sma">SMA/Sederajat</button>
-      <button class="ftab" data-f="umum">Terbuka Umum</button>
     </div>
 
-    <div class="lomba-grid">
-
-      <!-- LOMBA 1: PIDATO -->
-      <div class="lcard rv" data-cat="smp">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#5b21b6,#1a1464)"></div>
-          <span class="lcard-badge badge-smp">🎓 SMP/Sederajat</span>
-          <span class="lcard-icon">🎙️</span>
-          <h3>Pidato Kebangsaan</h3>
-          <p class="lcard-desc">Sampaikan semangat cinta tanah air dan kepemimpinan melalui orasi yang kuat, emosional, dan menginspirasi seluruh hadirin.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Solo / Individu</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Durasi 5–7 Menit</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg> Tanpa Teks, Hafalan</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Tema: Kepemimpinan & Nasionalisme</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Trofi Bergilir + Sertifikat Juara</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('pidato')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- LOMBA 2: DEBAT -->
-      <div class="lcard rv d1" data-cat="sma">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#1d4ed8,#5b21b6)"></div>
-          <span class="lcard-badge badge-sma">🎓 SMA/Sederajat</span>
-          <span class="lcard-icon">⚔️</span>
-          <h3>Debat Bahasa Indonesia</h3>
-          <p class="lcard-desc">Adu argumen secara logis, struktural, dan penuh data dalam format debat formal yang melatih kemampuan berpikir kritis tingkat tinggi.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Tim 3 Orang</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Sistem Gugur + Grand Final</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Format British Parliamentary</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Mosi Diumumkan H-2</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Best Speaker Award + Sertifikat</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('debat')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- LOMBA 3: MADING 3D -->
-      <div class="lcard rv d2" data-cat="smp">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#0891b2,#1a1464)"></div>
-          <span class="lcard-badge badge-smp">🎓 SMP/Sederajat</span>
-          <span class="lcard-icon">📰</span>
-          <h3>Mading 3D</h3>
-          <p class="lcard-desc">Ciptakan majalah dinding tiga dimensi yang kreatif, kaya informasi, dan estetis sebagai ekspresi visual tema Neosantara.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Tim 3–5 Orang</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Ukuran Maks. 100×120 cm</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Waktu Pengerjaan 120 Menit</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Material Bebas (Dibawa Sendiri)</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Trofi + Sertifikat Tim</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('mading')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- LOMBA 4: CERPEN -->
-      <div class="lcard rv d1" data-cat="sma">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#059669,#1a1464)"></div>
-          <span class="lcard-badge badge-sma">🎓 SMA/Sederajat</span>
-          <span class="lcard-icon">✍️</span>
-          <h3>Cerpen Kebangsaan</h3>
-          <p class="lcard-desc">Tuangkan imajinasi dan jiwa kebangsaanmu dalam sebuah cerita pendek yang sarat makna, pesan moral, dan kecintaan pada Indonesia.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Solo / Individu</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 1500–3000 Kata</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Dikumpulkan H-7</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Tema: Kepemimpinan / Kebangsaan</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Karya Diterbitkan + Sertifikat</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('cerpen')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- LOMBA 5: POSTER -->
-      <div class="lcard rv d2" data-cat="umum">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#d97706,#5b21b6)"></div>
-          <span class="lcard-badge badge-all">🌟 SMP & SMA</span>
-          <span class="lcard-icon">🎨</span>
-          <h3>Poster Digital</h3>
-          <p class="lcard-desc">Rancang poster digital yang kuat menyampaikan pesan kepemimpinan dan semangat Neosantara dalam bahasa visual yang bertenaga dan memukau.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Solo / Individu</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> A3 Portrait, Min. 300 DPI</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Format PNG/JPG</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Tema: Echoes of Neosantara</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Karya Dipamerkan + Sertifikat</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('poster')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- LOMBA 6: SHORT FILM -->
-      <div class="lcard rv d3" data-cat="umum">
-        <div class="lcard-head">
-          <div class="lcard-head-bg" style="background:linear-gradient(135deg,#dc2626,#7c3aed)"></div>
-          <span class="lcard-badge badge-all">🌟 SMP & SMA</span>
-          <span class="lcard-icon">🎬</span>
-          <h3>Short Film Kreatif</h3>
-          <p class="lcard-desc">Ceritakan inspirasi kepemimpinan dan nilai Neosantara dalam karya audio-visual pendek yang autentik, mengharukan, dan menggugah semangat.</p>
-        </div>
-        <div class="lcard-body">
-          <div class="lcard-meta">
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Tim Maks. 5 Orang</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg> Durasi 3–10 Menit, MP4</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Resolusi Min. 720p</div>
-            <div class="lmeta-row"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Boleh Bahasa Daerah + Subtitle</div>
-          </div>
-          <div class="lcard-prize">
-            <span>🏆</span>
-            <div><div class="prize-text">Hadiah Utama Rp 1.500.000</div><div class="prize-sub">+ Pemutaran Perdana + Sertifikat</div></div>
-          </div>
-          <button class="lcard-btn" onclick="openM('film')">
-            <span>Lihat Detail & Daftar</span>
-            <span>→</span>
-          </button>
-        </div>
-      </div>
-
-    </div><!-- /lomba-grid -->
-
-    <!-- PODIUM HADIAH -->
-    <div class="podium-section rv">
-      <h3 class="podium-title">🏆 Struktur Hadiah Per Cabang Lomba</h3>
-      <p class="podium-sub">Total hadiah lebih dari Rp 10.000.000 tersebar di seluruh cabang lomba</p>
-      <div class="podium-grid">
-        <div class="podium-item gold">
-          <div class="podium-medal">🥇</div>
-          <div class="podium-rank">Juara Pertama</div>
-          <div class="podium-amount">Rp 1.500.000</div>
-          <div class="podium-extras">
-            <span>🏆 Trofi Bergilir</span>
-            <span>📜 Sertifikat Juara 1</span>
-            <span>🎁 Goodie Bag Eksklusif</span>
-          </div>
-        </div>
-        <div class="podium-item">
-          <div class="podium-medal">🥈</div>
-          <div class="podium-rank">Juara Kedua</div>
-          <div class="podium-amount">Rp 1.000.000</div>
-          <div class="podium-extras">
-            <span>🥈 Trofi Tetap</span>
-            <span>📜 Sertifikat Juara 2</span>
-            <span>🎁 Goodie Bag</span>
-          </div>
-        </div>
-        <div class="podium-item">
-          <div class="podium-medal">🥉</div>
-          <div class="podium-rank">Juara Ketiga</div>
-          <div class="podium-amount">Rp 750.000</div>
-          <div class="podium-extras">
-            <span>🥉 Trofi Tetap</span>
-            <span>📜 Sertifikat Juara 3</span>
-            <span>🎁 Goodie Bag</span>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:2rem;padding:1.2rem;background:rgba(255,255,255,.03);border-radius:12px;text-align:center">
-        <p style="font-size:.85rem;color:rgba(248,246,255,.45);line-height:1.8">
-          ✅ <strong style="color:var(--mist)">Sertifikat Partisipasi</strong> diberikan kepada seluruh peserta &nbsp;·&nbsp; 
-          ✅ <strong style="color:var(--mist)">Best Performer</strong> Award di setiap cabang &nbsp;·&nbsp;
-          ✅ <strong style="color:var(--mist)">Special Award</strong> untuk penampilan terbaik keseluruhan
-        </p>
-      </div>
-    </div>
-
-    <!-- REGISTRATION STRIP -->
-    <div class="reg-strip rv">
-      <div class="reg-strip-info">
-        <h4>📝 Cara Mendaftar Lomba</h4>
-        <p>Pantau Instagram @lentscapeuq untuk link formulir pendaftaran resmi, teknis lomba lengkap, dan deadline pendaftaran setiap cabang.</p>
-      </div>
-      <div style="display:flex;gap:.8rem;flex-wrap:wrap">
-        <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="btn-a">📲 DM @lentscapeuq</a>
-        <a href="https://www.instagram.com/osissmaituq/" target="_blank" class="btn-b">🏫 @osissmaituq</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================================
-     GALLERY / ATMOSPHERE
-============================================================ -->
-<section id="galeri">
-  <div class="container">
-    <div class="eyebrow rv" style="justify-content:center;display:flex">Suasana & Highlight</div>
-    <h2 class="sec-title rv d1" style="text-align:center">Atmosfer Lentscape</h2>
-    <p class="sec-lead rv d2" style="text-align:center;margin:0 auto 1rem">Sekilas momen-momen berkesan dari perjalanan Lentscape yang terus bertumbuh.</p>
-  </div>
-  <div class="gallery-marquee-wrap">
-    <div class="gallery-marquee">
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#1d4ed8)">🎙️</div><div class="gallery-cap">Lomba Pidato<div class="gallery-cap-sub">Peserta menyampaikan orasi penuh semangat</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1d4ed8,#0891b2)">⚔️</div><div class="gallery-cap">Debat Sengit<div class="gallery-cap-sub">Argumen beradu di babak grand final</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#059669,#1a1464)">✍️</div><div class="gallery-cap">Sesi Menulis<div class="gallery-cap-sub">Peserta cerpen menuangkan ide terbaik</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#d97706,#5b21b6)">🎨</div><div class="gallery-cap">Kreasi Mading<div class="gallery-cap-sub">Tim bekerja sama membangun mading 3D</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#dc2626,#7c3aed)">🎬</div><div class="gallery-cap">Pemutaran Film<div class="gallery-cap-sub">Karya short film terbaik ditayangkan</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#7c3aed,#0891b2)">🎤</div><div class="gallery-cap">Talkshow Utama<div class="gallery-cap-sub">Sesi inspirasi bersama tokoh pemimpin</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1a1464,#dc2626)">🏆</div><div class="gallery-cap">Malam Penghargaan<div class="gallery-cap-sub">Para juara meraih trofi bergengsi</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#059669)">🤝</div><div class="gallery-cap">Networking<div class="gallery-cap-sub">Pelajar lintas sekolah berkolaborasi</div></div></div>
-      <!-- duplicate for seamless loop -->
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#1d4ed8)">🎙️</div><div class="gallery-cap">Lomba Pidato<div class="gallery-cap-sub">Peserta menyampaikan orasi penuh semangat</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1d4ed8,#0891b2)">⚔️</div><div class="gallery-cap">Debat Sengit<div class="gallery-cap-sub">Argumen beradu di babak grand final</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#059669,#1a1464)">✍️</div><div class="gallery-cap">Sesi Menulis<div class="gallery-cap-sub">Peserta cerpen menuangkan ide terbaik</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#d97706,#5b21b6)">🎨</div><div class="gallery-cap">Kreasi Mading<div class="gallery-cap-sub">Tim bekerja sama membangun mading 3D</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#dc2626,#7c3aed)">🎬</div><div class="gallery-cap">Pemutaran Film<div class="gallery-cap-sub">Karya short film terbaik ditayangkan</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#7c3aed,#0891b2)">🎤</div><div class="gallery-cap">Talkshow Utama<div class="gallery-cap-sub">Sesi inspirasi bersama tokoh pemimpin</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1a1464,#dc2626)">🏆</div><div class="gallery-cap">Malam Penghargaan<div class="gallery-cap-sub">Para juara meraih trofi bergengsi</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#059669)">🤝</div><div class="gallery-cap">Networking<div class="gallery-cap-sub">Pelajar lintas sekolah berkolaborasi</div></div></div>
-    </div>
-    <div class="gallery-marquee2">
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#0891b2,#5b21b6)">🌟</div><div class="gallery-cap">Opening Ceremony<div class="gallery-cap-sub">Pembukaan resmi Lentscape yang meriah</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#7c3aed,#d97706)">📸</div><div class="gallery-cap">Sesi Dokumentasi<div class="gallery-cap-sub">Kenangan terbaik diabadikan bersama</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1d4ed8,#059669)">🎭</div><div class="gallery-cap">Penampilan Seni<div class="gallery-cap-sub">Hiburan budaya khas Nusantara</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#dc2626,#1a1464)">🎵</div><div class="gallery-cap">Hiburan Panggung<div class="gallery-cap-sub">Penampilan musik dan seni pelajar</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#dc2626)">📢</div><div class="gallery-cap">Q&A Session<div class="gallery-cap-sub">Peserta berdiskusi langsung dengan narasumber</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#059669,#7c3aed)">🎪</div><div class="gallery-cap">Exhibition Corner<div class="gallery-cap-sub">Karya terbaik dipamerkan untuk umum</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#d97706,#1d4ed8)">🥇</div><div class="gallery-cap">Awarding Night<div class="gallery-cap-sub">Pengumuman pemenang yang ditunggu-tunggu</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1a1464,#0891b2)">🌙</div><div class="gallery-cap">Closing Ceremony<div class="gallery-cap-sub">Penutupan penuh haru dan bangga</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#0891b2,#5b21b6)">🌟</div><div class="gallery-cap">Opening Ceremony<div class="gallery-cap-sub">Pembukaan resmi Lentscape yang meriah</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#7c3aed,#d97706)">📸</div><div class="gallery-cap">Sesi Dokumentasi<div class="gallery-cap-sub">Kenangan terbaik diabadikan bersama</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1d4ed8,#059669)">🎭</div><div class="gallery-cap">Penampilan Seni<div class="gallery-cap-sub">Hiburan budaya khas Nusantara</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#dc2626,#1a1464)">🎵</div><div class="gallery-cap">Hiburan Panggung<div class="gallery-cap-sub">Penampilan musik dan seni pelajar</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#5b21b6,#dc2626)">📢</div><div class="gallery-cap">Q&A Session<div class="gallery-cap-sub">Peserta berdiskusi langsung dengan narasumber</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#059669,#7c3aed)">🎪</div><div class="gallery-cap">Exhibition Corner<div class="gallery-cap-sub">Karya terbaik dipamerkan untuk umum</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#d97706,#1d4ed8)">🥇</div><div class="gallery-cap">Awarding Night<div class="gallery-cap-sub">Pengumuman pemenang yang ditunggu-tunggu</div></div></div>
-      <div class="gallery-card"><div class="gallery-img" style="background:linear-gradient(135deg,#1a1464,#0891b2)">🌙</div><div class="gallery-cap">Closing Ceremony<div class="gallery-cap-sub">Penutupan penuh haru dan bangga</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     TALKSHOW
-============================================================ -->
-<section id="talkshow">
-  <div class="container">
-    <div class="ts-hero">
-      <div class="ts-left">
-        <div class="ts-date-badge">🎤 Talkshow Inspiratif — Lentscape 9.0</div>
-        <h2>Sesi <span>Talkshow</span><br/>"Suara Generasi,<br/>Gema Nusantara"</h2>
-        <p>Talkshow Lentscape 9.0 adalah ruang pertemuan antara generasi muda yang penuh potensi dengan para pemimpin yang telah menorehkan jejak nyata. Ini bukan sekadar ceramah — ini adalah percakapan yang mengubah cara pandang dan membakar semangat.</p>
-        <p>Bergabunglah dalam sesi diskusi mendalam yang akan membahas kepemimpinan di era digital, kolaborasi lintas generasi, dan bagaimana nilai-nilai Nusantara bisa menjadi kompas navigasi dalam membangun Indonesia masa depan.</p>
-        <div class="ts-features">
-          <div class="ts-feat"><div class="ts-feat-icon">🎙️</div> Sesi keynote bersama tokoh inspiratif nasional</div>
-          <div class="ts-feat"><div class="ts-feat-icon">💬</div> Panel diskusi interaktif multi-perspektif</div>
-          <div class="ts-feat"><div class="ts-feat-icon">❓</div> Sesi Q&A langsung dengan para narasumber</div>
-          <div class="ts-feat"><div class="ts-feat-icon">🤝</div> Networking session peserta & pembicara</div>
-          <div class="ts-feat"><div class="ts-feat-icon">📜</div> Sertifikat resmi untuk semua peserta talkshow</div>
-          <div class="ts-feat"><div class="ts-feat-icon">🎁</div> Merchandise eksklusif Lentscape 9.0</div>
-        </div>
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem">
-          <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="btn-a">📲 Info Talkshow</a>
-          <a href="#faq" class="btn-b">❓ Lihat FAQ</a>
-        </div>
-      </div>
-      <div class="ts-right rvr">
-        <div class="ts-detail-card">
-          <div class="ts-detail-row">
-            <div class="tdr-icon">📍</div>
-            <div class="tdr-body"><label>Lokasi</label><span>SMAIT Ummul Quro Bogor (Luring)</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">🌐</div>
-            <div class="tdr-body"><label>Format</label><span>Hybrid — Luring & Siaran Online</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">👥</div>
-            <div class="tdr-body"><label>Peserta Talkshow</label><span>Siswa SMP, SMA & Umum</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">🎤</div>
-            <div class="tdr-body"><label>Jumlah Narasumber</label><span>3 Tokoh Inspiratif</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">💬</div>
-            <div class="tdr-body"><label>Bahasa</label><span>Bahasa Indonesia</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">⏱️</div>
-            <div class="tdr-body"><label>Durasi</label><span>Full Day (08.00 – 16.00 WIB)</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">🎁</div>
-            <div class="tdr-body"><label>Fasilitas</label><span>Sertifikat, Konsumsi, Merchandise, Doorprize</span></div>
-          </div>
-          <div class="ts-detail-row">
-            <div class="tdr-icon">💰</div>
-            <div class="tdr-body"><label>HTM Talkshow</label><span>Info via @lentscapeuq</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SPEAKERS -->
-    <div class="speakers-section rv">
-      <div style="text-align:center;margin-bottom:.5rem">
-        <div class="eyebrow" style="justify-content:center;display:flex">Para Narasumber</div>
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--white)">Tokoh-Tokoh Inspiratif</h3>
-        <p style="font-size:.88rem;color:rgba(248,246,255,.45);margin-top:.5rem">Narasumber terpilih yang akan berbagi wawasan dan pengalaman nyata</p>
-      </div>
-      <div class="speakers-grid">
-        <div class="spk-card rv">
-          <div class="spk-avatar">🌟</div>
-          <h4>Tokoh Kepemimpinan Nasional</h4>
-          <div class="spk-role">Keynote Speaker — Leadership</div>
-          <p>Praktisi kepemimpinan berpengalaman yang telah membuktikan bahwa nilai-nilai Pancasila adalah fondasi kepemimpinan yang kuat di era modern.</p>
-          <div class="spk-tags">
-            <span class="spk-tag">Kepemimpinan</span>
-            <span class="spk-tag">Nasionalisme</span>
-            <span class="spk-tag">Motivasi</span>
-          </div>
-        </div>
-        <div class="spk-card rv d2">
-          <div class="spk-avatar">🚀</div>
-          <h4>Inovator Muda Indonesia</h4>
-          <div class="spk-role">Speaker — Youth Innovation</div>
-          <p>Pemuda berprestasi yang telah membuktikan bahwa kearifan lokal Nusantara bisa menjadi kunci inovasi yang berdampak global dan berkelanjutan.</p>
-          <div class="spk-tags">
-            <span class="spk-tag">Inovasi</span>
-            <span class="spk-tag">Teknologi</span>
-            <span class="spk-tag">Gen Z</span>
-          </div>
-        </div>
-        <div class="spk-card rv d4">
-          <div class="spk-avatar">🏛️</div>
-          <h4>Praktisi Kebijakan Publik</h4>
-          <div class="spk-role">Speaker — Policy & Governance</div>
-          <p>Pemangku kebijakan yang berdedikasi mewujudkan tata kelola yang baik dan berkeadilan untuk mempersiapkan Indonesia Emas 2045.</p>
-          <div class="spk-tags">
-            <span class="spk-tag">Kebijakan</span>
-            <span class="spk-tag">Kolaborasi</span>
-            <span class="spk-tag">Masa Depan</span>
-          </div>
-        </div>
-      </div>
-      <p style="text-align:center;font-size:.8rem;color:rgba(248,246,255,.3);margin-top:1.5rem">*Pengumuman narasumber lengkap akan disampaikan melalui @lentscapeuq</p>
-    </div>
-
-    <!-- SCHEDULE -->
-    <div class="schedule-section rv">
-      <div class="sch-title">📋 Rundown Acara Lentscape 9.0</div>
-      <div class="sch-timeline">
-        <div class="sch-item">
-          <div class="sch-time">07.30</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Registrasi & Welcome Desk</h5><p>Peserta lomba dan talkshow melakukan registrasi ulang, pengambilan nomor peserta, snack pembuka, dan orientasi venue.</p></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">08.30</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot special"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Opening Ceremony Resmi</h5><p>Pembukaan oleh Ketua OSIS, sambutan Kepala Sekolah SMAIT UQ Bogor, persembahan seni budaya Nusantara, dan peluncuran resmi Lentscape 9.0.</p><div class="sch-chip">🎭 Penampilan Seni</div></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">09.30</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Lomba Sesi Pagi — Babak Penyisihan</h5><p>Seluruh cabang lomba dimulai secara bersamaan: Pidato Kebangsaan, Debat Bahasa Indonesia, Mading 3D, Cerpen, Poster Digital, dan Short Film screening awal.</p></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">10.00</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot special"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Talkshow Sesi I — Keynote Address</h5><p>Narasumber utama menyampaikan keynote bertema "Echoes of Neosantara: Visi Indonesia 2045 melalui Nilai Kebangsaan." Sesi diikuti pemaparan visi dan tanya jawab singkat.</p><div class="sch-chip">🎤 Sesi Utama</div></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">11.30</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>ISHOMA — Istirahat, Sholat, Makan</h5><p>Jeda istirahat, sholat Dzuhur berjamaah, dan makan siang bersama. Peserta dapat mengunjungi exhibition corner karya lomba yang sudah dikumpulkan.</p></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">13.00</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot special"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Talkshow Sesi II — Panel Discussion</h5><p>Diskusi panel dengan tema "Pemimpin Muda di Era Neosantara: Kolaborasi sebagai Kunci." Dipandu moderator dengan 2–3 narasumber dan melibatkan respons audiens secara aktif.</p><div class="sch-chip">💬 Panel Interaktif</div></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">14.00</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Lomba Sesi Siang — Babak Final & Semi Final</h5><p>Babak final seluruh cabang lomba. Peserta yang lolos penyisihan tampil kembali di hadapan dewan juri untuk perebutan posisi juara.</p></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">15.00</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Youth Talk & Live Q&A Session</h5><p>Sesi paling ditunggu-tunggu! Peserta dapat langsung bertanya dan berdialog dengan narasumber. Serta presentasi singkat dari perwakilan peserta terpilih.</p></div>
-          </div>
-        </div>
-        <div class="sch-item">
-          <div class="sch-time">15.45</div>
-          <div class="sch-event-wrap">
-            <div class="sch-dot-col"><div class="sch-dot special"></div><div class="sch-line-seg"></div></div>
-            <div class="sch-event"><h5>Awarding Night & Closing Ceremony</h5><p>Pengumuman pemenang seluruh cabang lomba, pemberian trofi dan hadiah, dokumentasi bersama, serta penutupan resmi Lentscape 9.0 yang penuh haru dan kebanggaan.</p><div class="sch-chip">🏆 Momen Puncak</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CTA BAND -->
-<div class="cta-band">
-  <h2>SIAP BERGABUNG?</h2>
-  <p>Jangan lewatkan kesempatan langka untuk mengasah dirimu di panggung Lentscape 9.0. Daftarkan tim atau dirimu sekarang sebelum kuota penuh!</p>
-  <div class="cta-band-btns">
-    <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="btn-white">📲 Daftar via @lentscapeuq</a>
-    <a href="https://www.instagram.com/osissmaituq/" target="_blank" class="btn-outline-w">🏫 OSIS SMAIT UQ Bogor</a>
-  </div>
-</div>
-
-<!-- ============================================================
-     FAQ
-============================================================ -->
-<section id="faq">
-  <div class="container">
-    <div style="text-align:center;max-width:600px;margin:0 auto 3rem">
-      <div class="eyebrow rv" style="justify-content:center;display:flex">Pertanyaan Umum</div>
-      <h2 class="sec-title rv d1">FAQ — Lentscape 9.0</h2>
-      <p class="sec-lead rv d2" style="margin:0 auto">Semua yang perlu kamu tahu sebelum mendaftar dan hadir di Lentscape 9.0.</p>
-    </div>
-    <div class="faq-wrap">
-      <div class="faq-item rv">
-        <div class="faq-q"><span>Siapa saja yang bisa ikut Lentscape 9.0?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Lentscape 9.0 terbuka untuk siswa/i SMP dan SMA sederajat se-Indonesia. Beberapa kategori lomba (Poster Digital dan Short Film) juga terbuka untuk kedua jenjang secara bersamaan. Talkshow dapat dihadiri oleh pelajar maupun umum sesuai kapasitas.</p></div>
-      </div>
-      <div class="faq-item rv d1">
-        <div class="faq-q"><span>Bagaimana cara mendaftarkan diri atau tim?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Pendaftaran dilakukan melalui formulir online yang akan diumumkan melalui akun Instagram resmi <a href="https://www.instagram.com/lentscapeuq/" target="_blank">@lentscapeuq</a>. Pastikan kamu sudah follow akun tersebut agar tidak ketinggalan informasi pendaftaran dan deadline setiap cabang lomba.</p></div>
-      </div>
-      <div class="faq-item rv d1">
-        <div class="faq-q"><span>Apakah ada biaya pendaftaran?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Informasi terkait biaya pendaftaran (jika ada) akan diumumkan secara resmi melalui akun Instagram @lentscapeuq. Pantau terus pengumuman resminya untuk mengetahui detail biaya, metode pembayaran, dan tenggat waktu konfirmasi.</p></div>
-      </div>
-      <div class="faq-item rv d2">
-        <div class="faq-q"><span>Apakah peserta bisa mengikuti lebih dari satu cabang lomba?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Kebijakan multi-lomba akan diatur lebih lanjut dalam technical meeting masing-masing cabang. Namun pada prinsipnya, peserta dapat mendaftar di lebih dari satu lomba selama memenuhi syarat dan tidak terjadi bentrok jadwal. Pastikan mencermati detail teknis yang akan disampaikan.</p></div>
-      </div>
-      <div class="faq-item rv d2">
-        <div class="faq-q"><span>Bagaimana teknis lomba Short Film dan Poster Digital?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Untuk Short Film dan Poster Digital, karya dikumpulkan terlebih dahulu sebelum hari H (H-7) melalui Google Drive yang akan diberikan saat pendaftaran. Pengumuman finalis dan pemenang dilakukan saat acara berlangsung. Detail teknis lengkap tersedia di panduan teknis masing-masing lomba.</p></div>
-      </div>
-      <div class="faq-item rv d3">
-        <div class="faq-q"><span>Apakah ada penginapan atau transportasi yang disediakan?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Panitia tidak menyediakan fasilitas penginapan dan transportasi. Peserta dari luar kota diharapkan mengatur akomodasi secara mandiri. Untuk referensi penginapan di sekitar Bogor, pantau informasi dari panitia melalui Instagram resmi.</p></div>
-      </div>
-      <div class="faq-item rv d3">
-        <div class="faq-q"><span>Kapan pengumuman pemenang dilakukan?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Pengumuman pemenang seluruh cabang lomba dilakukan pada saat Closing Ceremony & Awarding Night di akhir acara (sekitar pukul 15.45 WIB). Hasil akan diumumkan secara langsung di venue dan kemudian dipublikasikan melalui akun @lentscapeuq.</p></div>
-      </div>
-      <div class="faq-item rv d4">
-        <div class="faq-q"><span>Apakah peserta yang tidak menang tetap mendapatkan sertifikat?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Ya! Seluruh peserta yang terdaftar dan hadir akan mendapatkan sertifikat partisipasi resmi dari OSIS SMAIT Ummul Quro Bogor. Sertifikat ini dapat digunakan sebagai bukti pengalaman organisasi dan prestasi dalam portofolio akademik maupun non-akademik.</p></div>
-      </div>
-      <div class="faq-item rv d4">
-        <div class="faq-q"><span>Bagaimana menghubungi panitia Lentscape 9.0?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a"><p>Kamu bisa menghubungi panitia melalui DM Instagram <a href="https://www.instagram.com/lentscapeuq/" target="_blank">@lentscapeuq</a> atau <a href="https://www.instagram.com/osissmaituq/" target="_blank">@osissmaituq</a>. Untuk pertanyaan mendesak, nomor kontak panitia akan tersedia di bio Instagram @lentscapeuq.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     FOOTER
-============================================================ -->
-<footer>
-  <div class="ft-top">
-    <div class="ft-brand">
-      <div class="ft-brand-logo">LENTSCAPE 9.0</div>
-      <p>Sebuah panggung kepemimpinan tahunan yang lahir dari dedikasi OSIS SMAIT Ummul Quro Bogor untuk mencetak generasi muda Indonesia yang tangguh, berakhlak mulia, dan berwawasan Nusantara.</p>
-      <p style="margin-top:.8rem;font-size:.82rem;color:rgba(248,246,255,.35)">Echoes of Neosantara: Building Indonesia's Future through National Values and Collaboration.</p>
-      <div class="ft-socials">
-        <a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="ft-soc" title="Instagram Lentscape">📸</a>
-        <a href="https://www.instagram.com/osissmaituq/" target="_blank" class="ft-soc" title="Instagram OSIS">🏫</a>
-        <a href="https://smait.uqb.sch.id/" target="_blank" class="ft-soc" title="Website SMAIT UQ">🌐</a>
-        <a href="https://ummulqurobogor.sch.id/" target="_blank" class="ft-soc" title="Ummul Quro">📚</a>
-      </div>
-    </div>
-    <div class="ft-col">
-      <h5>Navigasi</h5>
-      <ul>
-        <li><a href="#home">🏠 Home</a></li>
-        <li><a href="#informasi">📖 Informasi</a></li>
-        <li><a href="#theme">🌿 Tema</a></li>
-        <li><a href="#lomba">🏆 Lomba</a></li>
-        <li><a href="#galeri">🖼️ Galeri</a></li>
-        <li><a href="#talkshow">🎤 Talkshow</a></li>
-        <li><a href="#faq">❓ FAQ</a></li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h5>Cabang Lomba</h5>
-      <ul>
-        <li><a href="#" onclick="openM('pidato');return false">🎙️ Pidato Kebangsaan</a></li>
-        <li><a href="#" onclick="openM('debat');return false">⚔️ Debat Bahasa Indonesia</a></li>
-        <li><a href="#" onclick="openM('mading');return false">📰 Mading 3D</a></li>
-        <li><a href="#" onclick="openM('cerpen');return false">✍️ Cerpen Kebangsaan</a></li>
-        <li><a href="#" onclick="openM('poster');return false">🎨 Poster Digital</a></li>
-        <li><a href="#" onclick="openM('film');return false">🎬 Short Film Kreatif</a></li>
-      </ul>
-    </div>
-    <div class="ft-col">
-      <h5>Kontak & Link</h5>
-      <ul>
-        <li><a href="https://www.instagram.com/lentscapeuq/" target="_blank">📲 @lentscapeuq</a></li>
-        <li><a href="https://www.instagram.com/osissmaituq/" target="_blank">🏫 @osissmaituq</a></li>
-        <li><a href="https://smait.uqb.sch.id/" target="_blank">🌐 smait.uqb.sch.id</a></li>
-        <li><a href="https://ummulqurobogor.sch.id/" target="_blank">📚 ummulqurobogor.sch.id</a></li>
-        <li><a href="https://pmb.ummulqurobogor.sch.id/" target="_blank">🎓 PMB Online UQ</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="ft-bottom">
-    <p class="ft-copy">© 2025 LENTSCAPE 9.0 — OSIS SMAIT Ummul Quro Bogor. All rights reserved.</p>
-    <p class="ft-made">Designed with <span>♥</span> for Indonesia's Future Leaders</p>
-  </div>
-</footer>
-
-<!-- ============================================================
-     MODALS
-============================================================ -->
-<div class="modal-bg" id="mBg" onclick="closeMClick(event)">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeM()">✕</button>
-    <div id="mBody"></div>
-  </div>
-</div>
-
-<!-- ============================================================
-     JAVASCRIPT
-============================================================ -->
-<script>
-/* ---- CURSOR ---- */
-const c1=document.getElementById('cur'),c2=document.getElementById('cur2');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c1.style.left=mx+'px';c1.style.top=my+'px'});
-(function animC(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;c2.style.left=rx+'px';c2.style.top=ry+'px';requestAnimationFrame(animC)})();
-document.querySelectorAll('a,button,.lcard,.faq-q').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-lg'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-lg'));
-});
-
-/* ---- BACKGROUND CANVAS ---- */
-const cv=document.getElementById('bgc'),cx=cv.getContext('2d');
-let W,H,pts=[];
-function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}
-resize(); window.addEventListener('resize',resize);
-function initPts(){pts=[];for(let i=0;i<220;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.4+.3,a:Math.random(),c:Math.random()>.5?'#7c3aed':'#3b82f6'})}
-initPts();
-let t=0;
-function drawBg(){
-  cx.clearRect(0,0,W,H);t+=.0004;
-  // gradient mesh
-  [[W*.3+Math.sin(t)*W*.12,H*.35+Math.cos(t*.7)*H*.1,'rgba(91,33,182,.07)',.4*W],
-   [W*.7+Math.cos(t*.9)*W*.1,H*.6+Math.sin(t*.5)*H*.12,'rgba(59,130,246,.05)',.35*W],
-   [W*.5+Math.sin(t*1.3)*W*.08,H*.2+Math.cos(t*1.1)*H*.08,'rgba(124,58,237,.06)',.3*W]
-  ].forEach(([gx,gy,col,r])=>{const g=cx.createRadialGradient(gx,gy,0,gx,gy,r);g.addColorStop(0,col);g.addColorStop(1,'transparent');cx.fillStyle=g;cx.fillRect(0,0,W,H)});
-  // stars
-  pts.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-    p.a+=.008;
-    cx.globalAlpha=.2+.4*Math.abs(Math.sin(p.a));
-    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=p.c;cx.fill();
-  });
-  // connections
-  cx.globalAlpha=1;
-  for(let i=0;i<pts.length;i++){
-    for(let j=i+1;j<pts.length;j++){
-      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<90){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(124,58,237,${.06*(1-d/90)})`;cx.lineWidth=.6;cx.stroke()}
-    }
-  }
-  requestAnimationFrame(drawBg);
-}
-drawBg();
-
-/* ---- NAVBAR ---- */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  nav.classList.toggle('scrolled',scrollY>60);
-  updateNav();
-  revealAll();
-});
-function updateNav(){
-  const secs=['home','informasi','theme','lomba','galeri','talkshow','faq'];
-  let cur='home';
-  secs.forEach(id=>{const el=document.getElementById(id);if(el&&scrollY>=el.offsetTop-220)cur=id});
-  document.querySelectorAll('.nav-links a[data-s]').forEach(a=>a.classList.toggle('on',a.dataset.s===cur));
-}
-
-/* ---- HAMBURGER ---- */
-const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
-ham.addEventListener('click',()=>{
-  ham.classList.toggle('open');mob.classList.toggle('on');
-  if(mob.classList.contains('on')){ham.children[0].style.transform='translateY(5.5px) rotate(45deg)';ham.children[1].style.opacity='0';ham.children[2].style.transform='translateY(-5.5px) rotate(-45deg)'}
-  else{ham.children[0].style.transform='';ham.children[1].style.opacity='';ham.children[2].style.transform=''}
-});
-document.querySelectorAll('.mob-link').forEach(a=>a.addEventListener('click',()=>{mob.classList.remove('on');ham.children[0].style.transform='';ham.children[1].style.opacity='';ham.children[2].style.transform=''}));
-
-/* ---- SCROLL REVEAL ---- */
-function revealAll(){
-  document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>{
-    if(el.getBoundingClientRect().top<innerHeight-80)el.classList.add('vi');
-  });
-}
-revealAll();
-
-/* ---- COUNTER ANIM ---- */
-const cObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const tgt=+e.target.dataset.c,dur=1800,start=performance.now();
-      (function up(now){
-        const prog=Math.min((now-start)/dur,1),ease=prog<.5?2*prog*prog:-1+(4-2*prog)*prog;
-        e.target.textContent=Math.round(ease*tgt)+(tgt>=100?'+':'');
-        if(prog<1)requestAnimationFrame(up);
-      })(start);
-      cObs.unobserve(e.target);
-    }
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-c]').forEach(el=>cObs.observe(el));
-
-/* ---- COUNTDOWN ---- */
-const TARGET=new Date('2025-10-25T08:00:00');
-function tick(){
-  const d=TARGET-new Date();
-  if(d<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');return}
-  document.getElementById('cd-d').textContent=String(Math.floor(d/864e5)).padStart(2,'0');
-  document.getElementById('cd-h').textContent=String(Math.floor(d%864e5/36e5)).padStart(2,'0');
-  document.getElementById('cd-m').textContent=String(Math.floor(d%36e5/6e4)).padStart(2,'0');
-  document.getElementById('cd-s').textContent=String(Math.floor(d%6e4/1e3)).padStart(2,'0');
-}
-tick();setInterval(tick,1e3);
-
-/* ---- FILTER TABS ---- */
-document.querySelectorAll('.ftab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');
-    const f=btn.dataset.f;
-    document.querySelectorAll('.lcard').forEach(c=>{
-      if(f==='all'||c.dataset.cat===f){c.style.display='';setTimeout(()=>{c.style.opacity='1';c.style.transform=''},50)}
-      else{c.style.opacity='0';c.style.transform='scale(.95)';setTimeout(()=>c.style.display='none',350)}
-    });
-  });
-});
-
-/* ---- FAQ ---- */
-document.querySelectorAll('.faq-q').forEach(q=>{
-  q.addEventListener('click',()=>{
-    const item=q.parentElement;
-    const wasOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-    if(!wasOpen)item.classList.add('open');
-  });
-});
-
-/* ---- MODAL DATA ---- */
-const MD={
-  pidato:{
-    label:'Lomba Pidato — SMP/Sederajat — Individu',
-    title:'🎙️ Lomba Pidato Kebangsaan',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Sampaikan semangat cinta tanah air, kepemimpinan, dan nilai-nilai Pancasila melalui orasi yang kuat, emosional, dan menginspirasi. Pidato Kebangsaan adalah cabang lomba yang paling menantang sekaligus paling berkesan di Lentscape 9.0.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Siswa/i aktif SMP atau sederajat (MTs, dll.)</li>
-        <li>Maksimal 2 peserta per sekolah untuk babak penyisihan</li>
-        <li>Peserta wajib membawa surat keterangan dari sekolah</li>
-        <li>Berpakaian rapi, sopan, dan mencerminkan identitas sekolah</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Naskah pidato dibuat sendiri (bukan karya orang lain)</li>
-        <li>Durasi: 5–7 menit (kurang/lebih dari waktu akan ada pengurangan nilai)</li>
-        <li>Penampilan tanpa teks/contekan (hafalan penuh)</li>
-        <li>Tema bebas dalam lingkup: Kepemimpinan, Nasionalisme, atau Neosantara</li>
-        <li>Menggunakan Bahasa Indonesia yang baik dan benar</li>
-        <li>Urutan tampil ditentukan melalui undian saat technical meeting</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Isi dan substansi pidato — 35%</li>
-        <li>Penampilan dan penjiwaan — 30%</li>
-        <li>Kejelasan pengucapan dan intonasi suara — 20%</li>
-        <li>Kesesuaian tema dan pesan moral — 15%</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Trofi Bergilir + Sertifikat</li>
-        <li>Juara 2: Rp 1.000.000 + Trofi + Sertifikat</li>
-        <li>Juara 3: Rp 750.000 + Trofi + Sertifikat</li>
-        <li>Best Expression Award: Piagam Khusus</li>
-      </ul></div>`
-  },
-  debat:{
-    label:'Lomba Debat — SMA/Sederajat — Tim 3 Orang',
-    title:'⚔️ Lomba Debat Bahasa Indonesia',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Adu argumen secara logis, struktural, dan berbasis data dalam format debat formal. Ini adalah arena bagi mereka yang percaya bahwa kata-kata yang tepat bisa mengubah dunia.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Siswa/i aktif SMA/SMK/MA/sederajat</li>
-        <li>1 tim terdiri dari 3 orang (Pembicara 1, 2, dan 3)</li>
-        <li>Maksimal 2 tim per sekolah</li>
-        <li>Semua anggota tim harus dari sekolah yang sama</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Format: British Parliamentary / Asian Parliamentary (akan diumumkan H-7)</li>
-        <li>Mosi debat diumumkan H-2 sebelum hari lomba</li>
-        <li>Posisi pro/kontra ditentukan melalui undian sebelum tiap sesi</li>
-        <li>Sistem gugur untuk babak penyisihan, tiga besar masuk grand final</li>
-        <li>Seluruh argumentasi dalam Bahasa Indonesia formal</li>
-        <li>Waktu bicara tiap pembicara diatur oleh timer resmi</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Matter — Kualitas dan relevansi argumen (40%)</li>
-        <li>Manner — Cara penyampaian, diksi, dan gestur (40%)</li>
-        <li>Method — Struktur, alur, dan strategi tim (20%)</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Trofi + Sertifikat Tim</li>
-        <li>Juara 2: Rp 1.000.000 + Trofi + Sertifikat Tim</li>
-        <li>Juara 3: Rp 750.000 + Trofi + Sertifikat Tim</li>
-        <li>Best Speaker: Piagam Individu + Hadiah Spesial</li>
-      </ul></div>`
-  },
-  mading:{
-    label:'Lomba Mading 3D — SMP/Sederajat — Tim 3–5 Orang',
-    title:'📰 Lomba Mading 3D',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Ciptakan majalah dinding tiga dimensi yang kreatif, informatif, dan penuh daya — sebuah karya seni visual yang menceritakan visi Neosantara dengan cara yang paling menarik.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Siswa/i aktif SMP/MTs/sederajat</li>
-        <li>1 tim terdiri dari 3–5 orang dari sekolah yang sama</li>
-        <li>Maksimal 2 tim per sekolah</li>
-        <li>Membawa surat keterangan dari sekolah</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Ukuran mading: Maksimal 100 cm × 120 cm (Lebar × Tinggi)</li>
-        <li>Tema: "Neosantara — Masa Depan Indonesiaku"</li>
-        <li>Dikerjakan langsung di lokasi pada hari H</li>
-        <li>Waktu pengerjaan: 120 menit (tidak boleh melebihi batas waktu)</li>
-        <li>Semua material dibawa sendiri oleh tim peserta</li>
-        <li>Boleh menggunakan material apapun yang tidak berbahaya</li>
-        <li>Tidak diperkenankan menggunakan listrik/lampu kecuali atas izin panitia</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Kreativitas dan Inovasi — 35%</li>
-        <li>Kesesuaian Tema — 25%</li>
-        <li>Estetika dan Tata Letak Visual — 25%</li>
-        <li>Kedalaman Konten dan Informasi — 15%</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Trofi + Sertifikat Tim</li>
-        <li>Juara 2: Rp 1.000.000 + Trofi + Sertifikat Tim</li>
-        <li>Juara 3: Rp 750.000 + Trofi + Sertifikat Tim</li>
-        <li>Most Creative: Piagam Khusus</li>
-      </ul></div>`
-  },
-  cerpen:{
-    label:'Lomba Cerpen — SMA/Sederajat — Individu',
-    title:'✍️ Lomba Cerpen Kebangsaan',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Tuangkan imajinasi, jiwa sastra, dan kecintaan terhadap Indonesia dalam karya cerita pendek yang sarat makna, menggerakkan emosi, dan menginspirasi pembaca.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Siswa/i aktif SMA/SMK/MA/sederajat</li>
-        <li>Satu peserta hanya boleh mengumpulkan satu karya</li>
-        <li>Karya adalah karya orisinal dan belum pernah dipublikasikan/dilombakan</li>
-        <li>Sertakan pernyataan orisinalitas saat mengumpulkan karya</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Panjang tulisan: 1500–3000 kata (di luar judul)</li>
-        <li>Tema: Kepemimpinan, Keberagaman, atau Kolaborasi Kebangsaan</li>
-        <li>Format file: .docx atau .pdf</li>
-        <li>Font: Times New Roman 12pt, spasi 1.5, margin normal</li>
-        <li>Deadline pengumpulan: H-7 sebelum hari pelaksanaan</li>
-        <li>Dikirim melalui Google Form yang akan diumumkan via @lentscapeuq</li>
-        <li>Karya terbaik akan diterbitkan dalam antologi resmi Lentscape 9.0</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Kekuatan cerita, plot, dan konflik — 30%</li>
-        <li>Kesesuaian tema dan pesan moral — 30%</li>
-        <li>Gaya bahasa, diksi, dan alur narasi — 25%</li>
-        <li>Orisinalitas dan kreativitas — 15%</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Karya Diterbitkan + Sertifikat</li>
-        <li>Juara 2: Rp 1.000.000 + Karya Diterbitkan + Sertifikat</li>
-        <li>Juara 3: Rp 750.000 + Karya Diterbitkan + Sertifikat</li>
-        <li>Best Narrative: Piagam Khusus</li>
-      </ul></div>`
-  },
-  poster:{
-    label:'Poster Digital — SMP & SMA — Individu',
-    title:'🎨 Lomba Poster Digital',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Rancang poster digital yang kuat, memukau, dan sarat makna — menyampaikan pesan kepemimpinan dan semangat Neosantara dalam bahasa visual yang bertenaga dan tak terlupakan.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Terbuka untuk siswa/i SMP dan SMA/sederajat</li>
-        <li>Satu peserta hanya boleh mengumpulkan satu karya</li>
-        <li>Karya orisinal dan bukan hasil jiplakan</li>
-        <li>Tidak menggunakan elemen berbayar (stock premium)</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Tema: "Echoes of Neosantara" (bebas dalam lingkup tema)</li>
-        <li>Ukuran: A3 Portrait (297 mm × 420 mm)</li>
-        <li>Format file: PNG atau JPG, resolusi minimal 300 DPI</li>
-        <li>Software desain bebas (Photoshop, Illustrator, Canva, dll.)</li>
-        <li>Boleh menyertakan teks/tagline maksimal 30 kata</li>
-        <li>Deadline pengumpulan: H-7 sebelum hari pelaksanaan</li>
-        <li>Karya terpilih akan dipamerkan di exhibition corner</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Kreativitas dan Inovasi Visual — 35%</li>
-        <li>Kesesuaian Tema — 30%</li>
-        <li>Komposisi, Warna, dan Estetika — 20%</li>
-        <li>Kejelasan Pesan — 15%</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Karya Dipamerkan + Sertifikat</li>
-        <li>Juara 2: Rp 1.000.000 + Karya Dipamerkan + Sertifikat</li>
-        <li>Juara 3: Rp 750.000 + Karya Dipamerkan + Sertifikat</li>
-        <li>People's Choice Award: Berdasarkan voting peserta</li>
-      </ul></div>`
-  },
-  film:{
-    label:'Short Film — SMP & SMA — Tim Maks. 5 Orang',
-    title:'🎬 Lomba Short Film Kreatif',
-    html:`
-      <p style="font-size:.9rem;color:rgba(248,246,255,.65);line-height:1.8;margin-bottom:1.5rem">Ceritakan inspirasi kepemimpinan dan semangat Neosantara dalam karya audio-visual pendek yang autentik, mengharukan, dan menggugah rasa kebangsaan. Jadikan kameramu sebagai alat perubahan.</p>
-      <div class="modal-section"><h4>📋 Ketentuan Peserta</h4><ul>
-        <li>Terbuka untuk siswa/i SMP dan SMA/sederajat</li>
-        <li>1 tim terdiri dari maksimal 5 orang</li>
-        <li>Semua anggota boleh dari sekolah berbeda (kolaborasi diperbolehkan)</li>
-        <li>Karya orisinal dan belum pernah dipublikasikan</li>
-      </ul></div>
-      <div class="modal-section"><h4>📝 Teknis Lomba</h4><ul>
-        <li>Tema: Kepemimpinan, Kebangsaan, atau Kolaborasi Nusantara</li>
-        <li>Durasi: 3–10 menit (termasuk opening dan credit)</li>
-        <li>Format file: MP4, resolusi minimal 720p (1280×720)</li>
-        <li>Boleh menggunakan bahasa daerah dengan subtitle Bahasa Indonesia</li>
-        <li>Tidak menggunakan musik/gambar berlisensi tanpa izin</li>
-        <li>Deadline pengumpulan: H-7 melalui Google Drive yang disediakan panitia</li>
-        <li>Film terbaik akan diputar perdana di venue saat Closing Ceremony</li>
-      </ul></div>
-      <div class="modal-section"><h4>⚖️ Kriteria Penilaian</h4><ul>
-        <li>Kekuatan Cerita dan Pesan — 35%</li>
-        <li>Kualitas Produksi (audio/visual/editing) — 25%</li>
-        <li>Kesesuaian Tema — 25%</li>
-        <li>Orisinalitas dan Kreativitas — 15%</li>
-      </ul></div>
-      <div class="modal-section"><h4>🏆 Hadiah</h4><ul>
-        <li>Juara 1: Rp 1.500.000 + Pemutaran Perdana + Sertifikat</li>
-        <li>Juara 2: Rp 1.000.000 + Sertifikat Tim</li>
-        <li>Juara 3: Rp 750.000 + Sertifikat Tim</li>
-        <li>Best Cinematography: Piagam Khusus</li>
-        <li>Best Soundtrack: Piagam Khusus</li>
-      </ul></div>`
-  }
-};
-function openM(k){
-  const d=MD[k];if(!d)return;
-  document.getElementById('mBody').innerHTML=`<div class="modal-label">${d.label}</div><div class="modal-title">${d.title}</div>${d.html}<div class="modal-cta-row"><a href="https://www.instagram.com/lentscapeuq/" target="_blank" class="btn-a" style="cursor:pointer"><span>📲 Daftar via @lentscapeuq</span></a><button onclick="closeM()" class="btn-b" style="cursor:pointer">✕ Tutup</button></div>`;
-  document.getElementById('mBg').classList.add('on');
-  document.body.style.overflow='hidden';
-}
-function closeM(){document.getElementById('mBg').classList.remove('on');document.body.style.overflow=''}
-function closeMClick(e){if(e.target===document.getElementById('mBg'))closeM()}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
-
-/* ---- SMOOTH SCROLL ---- */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
-  });
-});
-
-/* ---- CLICK PARTICLES ---- */
-document.addEventListener('click',e=>{
-  for(let i=0;i<10;i++){
-    const p=document.createElement('span');
-    p.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:4px;height:4px;border-radius:50%;background:${Math.random()>.5?'#a78bfa':'#60a5fa'};pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:all 0.8s ease-out;`;
-    document.body.appendChild(p);
-    requestAnimationFrame(()=>{
-      const ang=Math.random()*Math.PI*2,d=30+Math.random()*60;
-      p.style.left=(e.clientX+Math.cos(ang)*d)+'px';
-      p.style.top=(e.clientY+Math.sin(ang)*d)+'px';
-      p.style.opacity='0';p.style.transform='translate(-50%,-50%) scale(0)';
-    });
-    setTimeout(()=>p.remove(),900);
-  }
-});
-</script>
+    <script>
+        // Initialize charts when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [85000, 92000, 78000, 105000, 112000, 124580],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(29, 53, 87, 0.9)',
+                            padding: 12,
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Portfolio Chart
+            const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+            const portfolioChart = new Chart(portfolioCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Stocks', 'Bonds', 'Real Estate', 'Crypto', 'Commodities'],
+                    datasets: [{
+                        data: [45, 25, 15, 10, 5],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#4cc9f0',
+                            '#f72585',
+                            '#7209b7',
+                            '#3a0ca3'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed}%`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+            
+            // ROI Chart
+            const roiCtx = document.getElementById('roiChart').getContext('2d');
+            const roiChart = new Chart(roiCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Stocks', 'Bonds', 'Real Estate', 'Crypto', 'Commodities'],
+                    datasets: [{
+                        label: 'ROI %',
+                        data: [18.5, 5.2, 12.8, 32.4, 8.7],
+                        backgroundColor: function(context) {
+                            const value = context.dataset.data[context.dataIndex];
+                            return value > 15 ? '#4cc9f0' : '#4361ee';
+                        },
+                        borderWidth: 0,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `ROI: ${context.parsed.x}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Cash Flow Chart
+            const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+            const cashFlowChart = new Chart(cashFlowCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: [45000, 52000, 48000, 62000, 58000, 65000],
+                            backgroundColor: '#4cc9f0',
+                            borderRadius: 5,
+                            borderSkipped: false
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [32000, 35000, 38000, 42000, 40000, 42360],
+                            backgroundColor: '#f72585',
+                            borderRadius: 5,
+                            borderSkipped: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Add interactivity to date filter buttons
+            const dateButtons = document.querySelectorAll('.date-filter button');
+            dateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    dateButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Add interactivity to nav links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navLinks.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
